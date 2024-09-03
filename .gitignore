@@ -1,0 +1,16 @@
+# Các thư mục và file phổ biến cần bỏ qua
+node_modules/
+dist/
+build/
+.env
+
+# Các file log
+*.log
+
+# Các file hệ thống
+.DS_Store
+Thumbs.db
+
+# Các file cấu hình IDE
+.vscode/
+.idea/
