@@ -35,7 +35,8 @@ Route::get('/get-news-outstanding', [NewsController::class, '_getDataNewsOutstan
 Route::get('/get-filter-products', [FilterController::class, '_getDataFilter']);
 Route::get('/get-data-userviewpage', [DashBoardController::class, '_getDataUserViewPage']);
 Route::post('/booking', [BookingController::class, '_bookingCar'])->name('booking');
-
+//user
+Route::post('/update-user-profile', [UserController::class, '_updateProfile']);
 // admin api
 Route::get('/admin/get-all-brand', [CarBrandController::class, '_getAllBrand']);
-    
+Route::post('/add-brand', [CarBrandController::class, '_addBrand']);

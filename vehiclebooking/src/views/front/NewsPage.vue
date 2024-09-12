@@ -1,46 +1,48 @@
 <template>
-    <!-- booking title -->
-    <div class="vel-booking"  :style="{ marginTop: -headerHeight + 'px' }">
-        <div class="container">
-            <div class="row align-items-center d-flex">
-                <h1 class="text-white fw-bold fs-1 text-center">News</h1>
+    <div>
+        <!-- booking title -->
+        <div class="vel-booking"  :style="{ marginTop: -headerHeight + 'px' }">
+            <div class="container">
+                <div class="row align-items-center d-flex">
+                    <h1 class="text-white fw-bold fs-1 text-center">News</h1>
+                </div>
             </div>
         </div>
-    </div>
-    <!-- News Main -->
-    <div class="new-main" >
-        <div class="container">
-            <!-- list news -->
-            <div class="row align-items-center">
-                <div class="col-lg-6 offset-lg-3 text-center">
-                    <h1 class="title text-black fw-bold my-4">News List</h1>
-                </div>
-                <div class="clearfix"></div>
-                <div v-for="(news,index) in news_outstanding" :key="index" class="col-12 col-sm-6 col-lg-4 bloglist d-flex flex-column">
-                    <div class="post-content my-3">
-                        <div class="post-image">
-                            <div class="rounded-3 overflow-hidden">
-                                <img class="w-100" :src="'../../../src/assets/front/images/' +  news.news_image " :alt="'Blog' + index ">
+        <!-- News Main -->
+        <div class="new-main" >
+            <div class="container">
+                <!-- list news -->
+                <div class="row align-items-center">
+                    <div class="col-lg-6 offset-lg-3 text-center">
+                        <h1 class="title text-black fw-bold my-4">News List</h1>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div v-for="(news,index) in news_outstanding" :key="index" class="col-12 col-sm-6 col-lg-4 bloglist d-flex flex-column">
+                        <div class="post-content my-3">
+                            <div class="post-image">
+                                <div class="rounded-3 overflow-hidden">
+                                    <img class="w-100" :src="'../../../src/assets/front/images/' +  news.news_image " :alt="'Blog' + index ">
+                                </div>
+                                <div class="post-date btn btn-success">
+                                    <div class="m">{{  news.created_at.split(" ")[1] }}</div>
+                                    <div class="d">{{ news.created_at.split(" ")[0].substr(0,3).toUpperCase() }}</div>
+                                </div>
                             </div>
-                            <div class="post-date btn btn-success">
-                                <div class="m">{{  news.created_at.split(" ")[1] }}</div>
-                                <div class="d">{{ news.created_at.split(" ")[0].substr(0,3).toUpperCase() }}</div>
+                            <div class="post-text text-white rounded-top  p-3 py-4  border-bottom border-3 border-success">
+                                <h4 class="text-center">{{ news.news_name }}</h4>
+                                <p class="text-secondary">{{ news.news_des.substr(0, 100) }} ...
+                                </p>
+                                <div class="btn border border-secondary rounded text-white fw-bold">Read More</div>
                             </div>
-                        </div>
-                        <div class="post-text text-white rounded-top  p-3 py-4  border-bottom border-3 border-success">
-                            <h4 class="text-center">{{ news.news_name }}</h4>
-                            <p class="text-secondary">{{ news.news_des.substr(0, 100) }} ...
-                            </p>
-                            <div class="btn border border-secondary rounded text-white fw-bold">Read More</div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- spin loading page -->
-        <div  v-if="loading" class="my-3 text-center">
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
+            <!-- spin loading page -->
+            <div  v-if="loading" class="my-3 text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
             </div>
         </div>
     </div>

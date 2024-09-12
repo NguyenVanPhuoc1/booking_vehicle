@@ -139,7 +139,7 @@
                                             <font-awesome-icon
                                                 :icon="['far', 'heart']"
                                             />
-                                            <span>{{ car.favorites }}</span>
+                                            <span>{{ car.favorites }} 15</span>
                                         </div>
                                     </div>
                                     <!-- price -->

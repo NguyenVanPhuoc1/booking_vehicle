@@ -172,4 +172,20 @@ class UserController extends Controller
             return redirect('http://localhost:5173/login?error=auth_failed');
         }
     }
+
+    // update profile
+    public function _updateProfile(Request $request){
+        try{
+            $user = User::where('email', $request->email)->first();
+            if($user->name === $request->name){
+                $user->update([
+                    'birthday' => $request->birthday ?? $user->birthday, 
+                    'gender' => $request->gender ?? $user->gender,
+                ]);
+            }
+            return response()->json(['message' => 'Cập nhật thành công' ,'user' => $user], 200);
+        }catch ( \Exception $e){
+            return response()->json(['error' => 'Không cập nhật được'], 200);
+        }
+    }
 }

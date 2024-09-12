@@ -1,16 +1,18 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-    <!-- Global Spinner -->
-    <!-- <a-spin :spinning="isLoading" tip="Loading..."> -->
-    <!-- </a-spin> -->
-        <!-- header -->
-            <TheHeader />
+    <div>
+        <!-- Global Spinner -->
+        <!-- <a-spin :spinning="isLoading" tip="Loading..."> -->
+        <!-- </a-spin> -->
+            <!-- header -->
+        <TheHeader />
 
-            <!-- body -->
-            <router-view></router-view>
+        <!-- body -->
+        <router-view></router-view>
 
-            <!-- footer -->
-            <TheFooter />
+        <!-- footer -->
+        <TheFooter />
+    </div>
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';

@@ -1,17 +1,20 @@
 <template>
-    <!-- booking title -->
-    <div class="vel-booking"  :style="{ marginTop: -headerHeight + 'px' }">
-        <div class="container">
-            <div class="row align-items-center d-flex">
-                <h1 class="text-white fw-bold fs-1 text-center">News</h1>
+    <div>
+
+        <!-- booking title -->
+        <div class="vel-booking"  :style="{ marginTop: -headerHeight + 'px' }">
+            <div class="container">
+                <div class="row align-items-center d-flex">
+                    <h1 class="text-white fw-bold fs-1 text-center">News</h1>
+                </div>
             </div>
         </div>
-    </div>
-    <!-- News Main -->
-    <div class="new-main">
-        <div class="container">
-            <!-- list news -->
-            
+        <!-- News Main -->
+        <div class="new-main">
+            <div class="container">
+                <!-- list news -->
+                
+            </div>
         </div>
     </div>
     

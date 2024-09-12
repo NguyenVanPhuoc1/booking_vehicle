@@ -28,6 +28,8 @@ class User extends Authenticatable
         'password',
         'role',
         'api_token',
+        'birthday',
+        'gender',
     ];
 
     /**
