@@ -14,7 +14,7 @@ import { store } from './store';
 // ant design vue
 import {
     Drawer, List, Menu,DatePicker, Carousel,Spin,Breadcrumb,BreadcrumbItem,
-    Button, message, Slider , Skeleton, Tabs, TabPane,
+    Button, message, Slider , Skeleton, Tabs, TabPane,Modal,
 } from 'ant-design-vue';
 import 'ant-design-vue/dist/reset.css';
 
@@ -37,6 +37,8 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 // import 'slick-carousel';
 
+// ckediter vue
+
 // fontawesome
 /* import the fontawesome core */
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -46,7 +48,6 @@ import { faHeart,faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 // import { faPhone, faBar } from '@fortawesome/free-solid-svg-icons'
 
 const app = createApp(App);
-
 app.use(router);
 app.use(Button);
 app.use(Drawer);app.use(Breadcrumb);app.use(BreadcrumbItem);
@@ -56,6 +57,7 @@ app.use(Slider);
 app.use(Skeleton);
 app.use(Spin);
 app.use(Tabs);
+app.use(Modal);
 app.use(TabPane);
 app.use(Carousel);
 app.use(DatePicker);

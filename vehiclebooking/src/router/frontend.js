@@ -13,7 +13,7 @@ const frontend = [
                 path: "quick-booking",
                 name: "frontend-booking",
                 component: () => import("../views/front/BookingPage.vue"),
-                meta: { role: '0' }
+                // meta: { role: '0' }
             },
             {
                 path: "about",

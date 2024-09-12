@@ -17,7 +17,7 @@
             mode="inline"
         >
             <!-- Duyệt qua danh sách items để render các menu item -->
-            <template v-for="item in menuItems" :key="item.key">
+            <div v-for="item in menuItems" :key="item.key">
                 <a-menu-item v-if="!item.children" :key="item.key">
                     <router-link :to="{ name: item.key }" class="text-decoration-none">
                         <component :is="item.icon" />
@@ -31,16 +31,16 @@
                         <span>{{ item.label }}</span>
                     </template>
                     <template #default>
-                        <template v-for="child  in item.children" :key="child.key">
+                        <div v-for="child  in item.children" :key="child.key">
                             <a-menu-item >
                                 <router-link :to="{ name: child.key }" class="text-decoration-none">
                                     <span>{{ child.label }}</span>
                                 </router-link>
                             </a-menu-item>
-                        </template>
+                        </div>
                     </template>
                 </a-sub-menu>
-            </template>
+            </div>
         </a-menu>
     </a-list>
 </template>
@@ -89,7 +89,7 @@ const menuItems = reactive([
                 label: "Hãng Sản Phẩm",
             },
             {
-                key: "",
+                key: "admin-product",
                 label: "Sản Phẩm",
             },
         ],

@@ -15,6 +15,11 @@ const admin = [
                 component: () => import("../views/admin/product/Product.vue"),
             },
             {
+                path: "product-crud",
+                name: "admin-product-crud",
+                component: () => import("../views/admin/product/ProductCrud.vue"),
+            },
+            {
                 path: "brand-product",
                 name: "admin-brand-product",
                 component: () => import("../views/admin/product/BrandProduct.vue"),

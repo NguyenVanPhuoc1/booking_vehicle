@@ -1,3 +1,5 @@
 <template>
-    Đây là trang Vai trò
+    <div>
+        Đây là trang Vai trò
+    </div>
 </template>

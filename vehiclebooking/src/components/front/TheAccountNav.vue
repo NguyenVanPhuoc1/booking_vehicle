@@ -7,18 +7,18 @@
             </div>
             <div class="name-user">
                 <h5 class="fw-bold">
-                    Nguyễn Văn A
+                    {{ userName.name }}
                 </h5>
-                <p class="email-user text-secondary .fs-5">nguyen@gmail.com</p>
+                <p class="email-user text-secondary .fs-5">{{ userName.email }}</p>
             </div>
         </div>
         <div class="m-3"></div>
         <div class="card-menu mx-4">
             <ul class="menu-col">
-                <li><router-link :class="{ active: isActive('dashboard') }" :to="'/account-dashboard'" class="menu-item "><font-awesome-icon :icon="['fas', 'home']" class="me-3" />Dashboard</router-link></li>
-                <li><router-link :class="{ active: isActive('profile') }" :to="'/account-profile'" class="menu-item "><font-awesome-icon :icon="['fas', 'user']" class="me-3" />My Profile</router-link></li>
-                <li><router-link :class="{ active: isActive('orders') }" :to="'/account-orders'" class="menu-item" ><font-awesome-icon :icon="['fas', 'calendar-day']" class="me-3" />My Orders</router-link></li>
-                <li><router-link :class="{ active: isActive('favorite') }" :to="'/account-favorite'" class="menu-item" ><font-awesome-icon :icon="['fas', 'car']" class="me-3" />My Favorite Cars</router-link></li>
+                <li><router-link :class="{ active: isActive('dashboard') }" :to="'/account-dashboard'" class="menu-item "><font-awesome-icon :icon="['fas', 'home']" class="me-3" />Trang Chủ</router-link></li>
+                <li><router-link :class="{ active: isActive('profile') }" :to="'/account-profile'" class="menu-item "><font-awesome-icon :icon="['fas', 'user']" class="me-3" />Thông Tin Cá Nhân</router-link></li>
+                <li><router-link :class="{ active: isActive('orders') }" :to="'/account-orders'" class="menu-item" ><font-awesome-icon :icon="['fas', 'calendar-day']" class="me-3" />Đơn Hàng</router-link></li>
+                <li><router-link :class="{ active: isActive('favorite') }" :to="'/account-favorite'" class="menu-item" ><font-awesome-icon :icon="['fas', 'car']" class="me-3" />Xe Yêu Thích</router-link></li>
                 <li><button @click.prevent="logout"  class="menu-item btn btn-success"><font-awesome-icon :icon="['fas', 'sign-out-alt']" class="me-3" />Sign Out</button></li>
             </ul>
         </div>
@@ -26,10 +26,12 @@
 </template>
 
 <script setup>
-// import { ref } from 'vue';
+import { ref } from 'vue';
 import { useStore } from 'vuex';
 
+const userName = ref(null);
 const store = useStore();
+userName.value =  store.getters.user ? store.getters.user : "Nguyễn Văn A";
 // const pathSegment = ref('dasboard');
 const isActive = (name) => {
     const currentPath = window.location.pathname;

@@ -1,3 +1,5 @@
 <template>
-    Đây là trang setting
+    <div>
+        Đây là trang setting
+    </div>
 </template>
