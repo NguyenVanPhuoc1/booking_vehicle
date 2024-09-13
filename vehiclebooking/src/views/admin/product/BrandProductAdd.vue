@@ -102,17 +102,32 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router'; // Dùng để lấy thông tin route và chuyển hướng
+import axios from 'axios';
+import { useToast } from 'vue-toastification';
+import apiClient from '@/services/ApiClient';
+import _ from 'lodash';
 
+// Khởi tạo các biến reactive
+const cateName = ref('');
+const slugName = ref('');
+const noi_bat = ref(false);
+const addbrandForm = ref(null);
+const errors = ref({});
+const toast = useToast();
+const route = useRoute(); // Lấy thông tin route hiện tại
+const router = useRouter(); // Sử dụng router để điều hướng
+
+// Hàm cập nhật slug
 function updateSlug() {
-    slugName.value = `${toSlug(cateName.value)}`
+    slugName.value = `${toSlug(cateName.value)}`;
 }
 
+// Hàm tạo slug
 function toSlug(str) {
-    // Chuyển hết sang chữ thường
+    // Chuyển đổi sang slug
     str = str.toLowerCase();
-
-    // xóa dấu
     str = str.replace(/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/g, 'a');
     str = str.replace(/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/g, 'e');
     str = str.replace(/(ì|í|ị|ỉ|ĩ)/g, 'i');
@@ -120,56 +135,71 @@ function toSlug(str) {
     str = str.replace(/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/g, 'u');
     str = str.replace(/(ỳ|ý|ỵ|ỷ|ỹ)/g, 'y');
     str = str.replace(/(đ)/g, 'd');
-
-    // Xóa ký tự đặc biệt
     str = str.replace(/([^0-9a-z-\s])/g, '');
-
-    // Xóa khoảng trắng thay bằng ký tự -
     str = str.replace(/(\s+)/g, '-');
-
-    // Xóa ký tự - liên tiếp
     str = str.replace(/-+/g, '-');
-
-    // xóa phần dự - ở đầu
     str = str.replace(/^-+/g, '');
-
-    // xóa phần dư - ở cuối
     str = str.replace(/-+$/g, '');
-
-    // return
     return str;
 }
 
-import axios from 'axios';
-import { useToast } from 'vue-toastification';
-
-const cateName = ref('');
-const slugName = ref('');
-const noi_bat = ref(false);
-const addbrandForm = ref(null);
-const errors = ref({});
-const toast = useToast();
-const addBrandSubmit = async() => {
+// Hàm xử lý submit thêm hoặc chỉnh sửa
+// console.log(route.params.id);
+const addBrandSubmit = async () => {
     try {
         errors.value = {};
-        const response = await axios.post('http://127.0.0.1:8000/api/add-brand', {
+        const payload = {
             brand_name: cateName.value,
             brand_slug: slugName.value,
-            noi_bat : noi_bat.value,
-        });
-        // console.log('Response:', response.data);
-        toast.success("Thêm thành công!");
-        // Thực hiện thêm các hành động khác như chuyển hướng hoặc hiển thị thông báo
+            noi_bat: noi_bat.value,
+        };
+        // Nếu có id trong route, thì là edit
+        if (route.params.id) {
+            const response = await axios.put(`http://127.0.0.1:8000/api/update-brand/${route.params.id}`, payload);
+            // console.log(response.data);
+            toast.success("Cập nhật thành công!");
+        } else {
+            // Nếu không có id, thì là thêm mới
+            const response = await axios.post('http://127.0.0.1:8000/api/add-brand', payload);
+            toast.success("Thêm thành công!");
+        }
+
+        // Chuyển hướng về danh sách hoặc trang khác
+        router.push('/admin/brand-product');
     } catch (error) {
-        // console.error('Error:', error);
-        // Thực hiện xử lý lỗi nếu cần
         if (error.response && error.response.status === 422) {
-            // Gán các thông báo lỗi vào errors
             errors.value = error.response.data.errors;
-            console.log(errors.value);
         } else {
             console.log('An unexpected error occurred:', error);
         }
     }
-}
+};
+
+
+// Hàm lấy dữ liệu khi edit
+const fetchBrand = async () => {
+    try {
+        const response = await apiClient.fetchData('/get-detail-brand', {
+            id: route.params.id 
+        });;
+        const brand = response;
+        // console.log(response);
+        // Điền dữ liệu vào form
+        cateName.value = brand.brand_name;
+        slugName.value = toSlug(brand.brand_name);
+        noi_bat.value = brand.noi_bat;
+    } catch (error) {
+        if (error) {
+            // Nếu id không tồn tại, điều hướng về trang 404
+            router.push('/404');
+        } 
+    }
+};
+
+// Khi component được mount, kiểm tra xem có id hay không
+onMounted(() => {
+    if (route.params.id) {
+        fetchBrand();
+    }
+});
 </script>

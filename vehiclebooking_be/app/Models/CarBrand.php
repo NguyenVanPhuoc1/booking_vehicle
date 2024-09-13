@@ -12,7 +12,7 @@ class CarBrand extends Model
     protected $connection = 'mongodb';
     protected $collection = 'car_brand';
 
-    protected $fillable = ['brand_name'];
+    protected $fillable = ['brand_name','brand_slug','noi_bat'];
 
     public function getCarsbyTypeName(){
         return $this->hasMany(Cars::class, 'brand_id', '_id');
