@@ -39,4 +39,7 @@ Route::post('/booking', [BookingController::class, '_bookingCar'])->name('bookin
 Route::post('/update-user-profile', [UserController::class, '_updateProfile']);
 // admin api
 Route::get('/admin/get-all-brand', [CarBrandController::class, '_getAllBrand']);
+Route::get('/get-detail-brand', [CarBrandController::class, '_getDetailBrand']);
 Route::post('/add-brand', [CarBrandController::class, '_addBrand']);
+Route::put('/update-brand/{id}', [CarBrandController::class, '_updateBrand']);
+

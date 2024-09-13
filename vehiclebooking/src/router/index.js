@@ -1,8 +1,9 @@
 import { createWebHistory, createRouter } from 'vue-router';
 import admin from './admin.js';
 import frontend from './frontend.js';
+import notfound from './notfound.js';
 
-const routes = [...admin, ...frontend];
+const routes = [...admin, ...frontend, ...notfound];
 const router = createRouter({
     history: createWebHistory(),
     routes

@@ -52,14 +52,15 @@
                                         <td>{{ item.brand_name }}</td>
                                         <td>
                                             <div class="form-check d-flex justify-content-center">
-                                                <input class="form-check-input" type="checkbox" :checked="item.noi_bat" v-model="item.noi_bat" :id="'check-brand-noibat-' + item._id">
+                                                <input class="form-check-input" type="checkbox" :checked="item.noi_bat" v-model="item.noi_bat"
+                                                @change="handleCheckboxChange($event, item._id)" :id="'check-brand-noibat-' + item._id">
                                                 <label :for="'check-brand-noibat-' + item._id" class="form-check-label"></label>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="operation d-flex justify-content-center" >
                                                 <div class="mx-2">
-                                                    <router-link :to="''" class="btn btn-primary"><font-awesome-icon :icon="['far', 'pen-to-square']" /> </router-link>
+                                                    <router-link :to="{ name: 'admin-brand-product-edit', params: { id: item._id } }" class="btn btn-primary"><font-awesome-icon :icon="['far', 'pen-to-square']" /> </router-link>
                                                 </div>
                                                 <div class="mx-2">
                                                     <router-link :to="''" class="btn btn-danger"><font-awesome-icon :icon="['fas', 'trash']" /> </router-link>
@@ -102,7 +103,7 @@ const getAllBrandName = async () => {
 
 const toggleSelectAll = async (event) => {
     const isChecked = event.target.checked;
-    await getAllBrandName(); // Đợi dữ liệu được lấy về
+    // await getAllBrandName(); // Đợi dữ liệu được lấy về
     if (isChecked) {
         selectedItems.value = brand_cars.value.map(item => item._id);
     } else {
@@ -113,7 +114,16 @@ onMounted(async () => {
     document.title = "Quản Lí Hãng";
     await getAllBrandName();
 }); 
-// watch(selectedItems, (newValue) => {
-//     selectAll.value = brand_cars.value.length > 0 && newValue.length === brand_cars.value.length;
-// });
+const handleCheckboxChange = async (event, id) => {
+    const isChecked = event.target.checked;
+    
+    try {
+        const response = await axios.put(`http://127.0.0.1:8000/api/update-brand/${id}`, {
+            noi_bat: isChecked
+        });
+        console.log('Update successful:', response.data);
+    } catch (error) {
+        console.error('Error updating item:', error);
+    }
+};
 </script>
