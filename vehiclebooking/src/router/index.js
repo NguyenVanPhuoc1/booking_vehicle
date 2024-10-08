@@ -2,6 +2,9 @@ import { createWebHistory, createRouter } from 'vue-router';
 import admin from './admin.js';
 import frontend from './frontend.js';
 import notfound from './notfound.js';
+// import { useStore } from "vuex";
+// const store = useStore();
+import { store } from '@/store/index.js'; 
 
 const routes = [...admin, ...frontend, ...notfound];
 const router = createRouter({
@@ -9,8 +12,8 @@ const router = createRouter({
     routes
 });
 router.beforeEach((to, from, next) => {
-    const storedUserInfo = sessionStorage.getItem('user_info');
-    const userInfo = storedUserInfo ? JSON.parse(storedUserInfo) : null;
+    const storedUserInfo = store.getters.user;
+    const userInfo = storedUserInfo ? storedUserInfo : null;
     
     const userLoggedIn = !!userInfo; // Kiểm tra nếu người dùng đã đăng nhập
     const userRole = userInfo ? userInfo.role : null; // Lấy vai trò của người dùng

@@ -59,11 +59,15 @@ const customers = ref([]);
 const loading = ref(false);
 const error = ref(null);
 
+import { useStore } from "vuex";
+const store = useStore();
+const apiClient = store.getters.apiClient;
+
 const fetchData_userviewpage = async (duration) => {
     try {
         error.value = null;
         loading.value = true;
-        const response = await axios.get('http://127.0.0.1:8000/api/get-data-userviewpage',{
+        const response = await axios.get(`${apiClient.baseUrl}/get-data-userviewpage`,{
             params: {
                 gia_tri: duration
             }
@@ -75,6 +79,7 @@ const fetchData_userviewpage = async (duration) => {
             ...item,
             screenPageViews: Number(item.screenPageViews)
         }));
+        // console.log(data);
         customers.value = data;  // Cập nhật giá trị cho customers
 
         // Cập nhật chartData sau khi dữ liệu đã được tải

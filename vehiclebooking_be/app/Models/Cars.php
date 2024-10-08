@@ -15,12 +15,12 @@ class Cars extends Model
     protected $connection = 'mongodb';
     protected $collection = 'cars';
 
-    protected $fillable = [];
+    protected $fillable = [ 'name','slug','price_per_day','description','noi_bat','brand_id'];
 
     // Define the one-to-one relationship
     public function specification()
     {
-        return $this->hasOne(CarsSpecifications::class, 'car_slug', 'slug');
+        return $this->hasOne(CarsSpecifications::class, 'car_id', '_id');
     }
     //connect collection car_image
     public function getImageCars(){

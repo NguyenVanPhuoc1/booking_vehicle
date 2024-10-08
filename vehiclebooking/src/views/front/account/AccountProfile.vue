@@ -111,6 +111,7 @@ onMounted(() => {
     document.title = "Account Profile";
 });
 const store = useStore();
+const apiClient = store.getters.apiClient;
 // set chiều cao cho header với carrousel
 const headerHeight = computed(() => store.getters.headerHeight);
 const user =  store.getters.user;
@@ -131,6 +132,8 @@ const user_birthdayError = ref('');
 const isValue = ref(false);
 const user_genderError = ref('');
 const isGender = ref(false);
+
+// Hàm kiểm tra hợp lệ ngày sinh
 const validateUBirth = () => {
     const re = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
     if (!re.test(user_birthday.value)) {
@@ -141,49 +144,58 @@ const validateUBirth = () => {
         user_birthdayError.value = 'Hợp lệ';
     }
 };
-const validateGender = () =>{
-    // console.log(user_gender.value);
+
+// Hàm kiểm tra hợp lệ giới tính
+const validateGender = () => {
     if (user_gender.value !== 'nam' && user_gender.value !== 'nữ') {
         isGender.value = false;
         user_genderError.value = 'Giới Tính không hợp lệ!';
-    }
-    else {
+    } else {
         isGender.value = true;
         user_genderError.value = 'Hợp lệ';
     }
-}
+};
 
-const updateProfile = async() =>{
-    // console.log(isGender.value ,isValue.value );
-    if(isGender.value == true && isValue.value == true){
-        try {
-            // Reset errors before sending request
-            errors.value = {};
-    
-            // Lấy CSRF token
-            await getToken();
-    
-            // Gửi yêu cầu POST đến server
-            const response = await axios.post("http://127.0.0.1:8000/api/update-user-profile", {
-                name: user_name.value,
-                email: user_email.value,
-                birthday: user_birthday.value, 
-                gender: user_gender.value,
-            });
-            console.log(response.data);
-            if (response.status === 200) {
-                toast.success("Cập Nhật Thành Công!");
-                // console.log(response.data);
-                sessionStorage.setItem('user_info', JSON.stringify(response.data.user));
-            } else {
-                errors.value = response.data.error;
-            }
-        } catch (error) {
-            console.log("Cập Nhật Không Thành Công!");
-            errors.value = error.response.data.errors;
-        }
+// Hàm cập nhật thông tin người dùng
+const updateProfile = async () => {
+    // Gọi các hàm validate để kiểm tra trước khi submit
+    validateUBirth();
+    validateGender();
+
+    // Kiểm tra điều kiện hợp lệ
+    if (!isGender.value || !isValue.value) {
+        alert('Thông Tin Không hợp lệ!');
+        return; // Dừng lại, không thực hiện submit
     }
-}
+
+    try {
+        // Reset errors before sending request
+        errors.value = {};
+
+        // Lấy CSRF token
+        await getToken();
+
+        // Gửi yêu cầu POST đến server
+        const response = await apiClient.postData("/update-user-profile", {
+            name: user_name.value,
+            email: user_email.value,
+            birthday: user_birthday.value,
+            gender: user_gender.value,
+        });
+
+        // Kiểm tra phản hồi từ server
+        if (response.status === 200) {
+            toast.success("Cập Nhật Thành Công!");
+            sessionStorage.setItem('user_info', JSON.stringify(response.data.user));
+        } else {
+            errors.value = response.data.error;
+        }
+    } catch (error) {
+        console.log("Cập Nhật Không Thành Công!");
+        errors.value = error.response?.data?.errors || {};
+    }
+};
+
 </script>
 
 <style>

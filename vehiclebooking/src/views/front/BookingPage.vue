@@ -157,6 +157,7 @@
         document.title = "Booking";
     });
     const store = useStore();
+    const apiClient = store.getters.apiClient;
     // set chiều cao cho header với carrousel
     const headerHeight = computed(() => store.getters.headerHeight);
     // chen ảnh trong select option
@@ -196,7 +197,7 @@ const bookingSubmit =async () => {
         // Lấy CSRF token
         await getToken();
         // Gửi dữ liệu booking đến server
-        const response = await axios.post('http://127.0.0.1:8000/api/booking', {
+        const response = await apiClient.postData('/booking', {
             selected_car: formData.value.selectedOption,
             pickup_location: formData.value.pickUpLocation,
             destination: formData.value.destination,

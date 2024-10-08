@@ -4,7 +4,7 @@
             <h3 class="fw-bold px-3">Quản Lí</h3>
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-6 col-lg-3">
+                    <div class="col-12 col-lg-3">
                         <ul class="d-flex list-unstyled m-0">
                             <li class="nav-item py-0 justify-content-sm-start">
                                 <button type="submit" class="btn btn-primary" @click.prevent="addBrandSubmit">
@@ -13,10 +13,10 @@
                                 </button>
                             </li>
                             <li class="nav-item py-0 ps-4">
-                                <div class="btn btn-danger">
+                                <router-link class="btn btn-danger" :to="{ name: 'admin-brand-product' }">
                                     <font-awesome-icon :icon="['fas', 'sign-out-alt']" />
                                     Thoát
-                                </div>
+                                </router-link>
                             </li>
                         </ul>
                     </div>
@@ -106,7 +106,9 @@ import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router'; // Dùng để lấy thông tin route và chuyển hướng
 import axios from 'axios';
 import { useToast } from 'vue-toastification';
-import apiClient from '@/services/ApiClient';
+import { useStore } from 'vuex';
+const store = useStore();
+const apiClient = store.getters.apiClient;
 import _ from 'lodash';
 
 // Khởi tạo các biến reactive
@@ -155,12 +157,12 @@ const addBrandSubmit = async () => {
         };
         // Nếu có id trong route, thì là edit
         if (route.params.id) {
-            const response = await axios.put(`http://127.0.0.1:8000/api/update-brand/${route.params.id}`, payload);
+            const response = await apiClient.updateData(`/update-brand/${route.params.id}`, payload);
             // console.log(response.data);
             toast.success("Cập nhật thành công!");
         } else {
             // Nếu không có id, thì là thêm mới
-            const response = await axios.post('http://127.0.0.1:8000/api/add-brand', payload);
+            const response = await apiClient.postData('/add-brand', payload);
             toast.success("Thêm thành công!");
         }
 

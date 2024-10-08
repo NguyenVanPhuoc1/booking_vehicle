@@ -20,6 +20,12 @@ const admin = [
                 component: () => import("../views/admin/product/ProductCrud.vue"),
             },
             {
+                path: "product/:slug",
+                name: "admin-product-edit",
+                component: () => import("../views/admin/product/ProductCrud.vue"),
+                props: true,
+            },
+            {
                 path: "brand-product",
                 name: "admin-brand-product",
                 component: () => import("../views/admin/product/BrandProduct.vue"),

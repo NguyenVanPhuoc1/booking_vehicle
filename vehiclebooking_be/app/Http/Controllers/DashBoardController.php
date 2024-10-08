@@ -39,15 +39,47 @@ class DashBoardController extends Controller
         $data = [];
         $currentDate = clone $startDate;
 
+        // for ($i = 0; $i < $numberOfDays; $i++) {
+        //     $data[] = [
+        //         'date' => $currentDate->toDateString(),
+        //         'screenPageViews' => $analyticsData[$i]['screenPageViews'] ?? 0,
+        //     ];
+
+        //     $currentDate->addDay();
+        // }
+        // Chuyển đổi ngày trong dữ liệu thành định dạng dd-mm-yyyy
+        $dataDates = array_map(function($data) {
+            return Carbon::createFromFormat('Ymd', $data['date'])->format('d-m-Y');
+        }, $analyticsData);
+
         for ($i = 0; $i < $numberOfDays; $i++) {
-            $data[] = [
-                'date' => $currentDate->toDateString(),
-                'screenPageViews' => $analyticsData[$i]['screenPageViews'] ?? 0,
-            ];
+            // Chuyển đổi ngày hiện tại thành định dạng dd-mm-yyyy
+            $currentDateString = $currentDate->format('d-m-Y');
+
+            // Kiểm tra nếu ngày hiện tại có trong dữ liệu
+            if (in_array($currentDateString, $dataDates)) {
+                // Lấy dữ liệu cho ngày hiện tại
+                $dataItem = array_filter($analyticsData, function($item) use ($currentDateString) {
+                    return Carbon::createFromFormat('Ymd', $item['date'])->format('d-m-Y') === $currentDateString;
+                });
+
+                $dataItem = array_shift($dataItem); // Lấy phần tử đầu tiên của mảng lọc
+
+                $data[] = [
+                    'date' => $currentDateString,
+                    'screenPageViews' => $dataItem['screenPageViews'] ?? 0,
+                ];
+            } else {
+                // Ngày không có dữ liệu
+                $data[] = [
+                    'date' => $currentDateString,
+                    'screenPageViews' => 0,
+                ];
+            }
 
             $currentDate->addDay();
         }
-
         return $data;
+        // return $analyticsData;
     }
 }

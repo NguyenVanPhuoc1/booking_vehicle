@@ -73,6 +73,7 @@
         document.title = "Contact";
     });
     const store = useStore();
+    const apiClient = store.getters.apiClient;
     // set chiều cao cho header với carrousel
     const headerHeight = computed(() => store.getters.headerHeight);
 
@@ -100,7 +101,7 @@ const getQuestion = async () => {
         await getToken();
 
         // Gửi yêu cầu POST đến server
-        const response = await axios.post("http://127.0.0.1:8000/api/get-question", {
+        const response = await apiClient.postData("/get-question", {
             name: cus_name.value,
             email: cus_email.value,
             phone: cus_phone.value, 

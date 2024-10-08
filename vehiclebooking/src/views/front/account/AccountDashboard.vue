@@ -139,7 +139,8 @@
     const store = useStore();
     // set chiều cao cho header với carrousel
     const headerHeight = computed(() => store.getters.headerHeight);
-    const user =  store.getters.user;
+    // const user =  store.getters.user;
+    
 </script>
 
 <style>

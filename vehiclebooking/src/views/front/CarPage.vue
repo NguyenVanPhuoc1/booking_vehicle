@@ -110,19 +110,20 @@
                 </div>
                 <!-- car list-->
                 <div class="col-12 col-lg-9">
-                    <div class="row">
+                    <div class="row" v-if="cars.length  > 1">
                         <!-- car item -->
-                        <div
-                            class="col-12 col-md-6 col-lg-4"
+                        <div 
+                            class="col-12 col-md-6 col-lg-4 mb-4"
                             v-for="car in cars"
                             :key="car._id"
                         >
                             <div class="car-item rounded p-2 border">
                                 <div class="car-image">
                                     <img
-                                        :src="'../../../src/assets/front/images/' + car.get_image_cars[0].url_img[0]"
-                                        class="d-block w-100 rounded"
+                                        :src="car.get_image_cars[0].url_img[0]"
+                                        class="d-block w-100 rounded object-fit-cover"
                                         :alt="`Ảnh sản phẩm ${car.name}`"
+                                        style="max-height: 162px;"
                                     />
                                 </div>
                                 <div class="car-detail">
@@ -162,6 +163,12 @@
                             </div>
                         </div>
                     </div>
+                    <div v-else>
+                    <div class="alert alert-danger text-center fw-bold">
+                        <!-- Nội dung khi điều kiện customers.length là false -->
+                        <p>Không có sản phẩm nào được tìm thấy.</p>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>

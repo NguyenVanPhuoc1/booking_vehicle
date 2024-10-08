@@ -1,0 +1,85 @@
+[{
+  "_id": {
+    "$oid": "66c6f9fe98a29d9e7a234fd9"
+  },
+  "name": "Toyota Supra",
+  "slug": "toyota-supra",
+  "price_per_day": 100,
+  "description": "A powerful sports car with advanced features.",
+  "noi_bat": true,
+  "createdAt": {
+    "$date": "2024-08-22T08:42:38.468Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-22T08:42:38.468Z"
+  },
+  "brand_id": "66e56aade3a5fd00a00022f3"
+},
+{
+  "_id": {
+    "$oid": "66c6fa4998a29d9e7a234fda"
+  },
+  "name": "BMW M2 200",
+  "slug": "bmw-m2-200",
+  "price_per_day": 265,
+  "description": "The BMW M2 is the high-performance version of the 2 Series 2-door coupé. The first generation of the M2 is the F87 coupé and is powered by turbocharged.",
+  "noi_bat": true,
+  "createdAt": {
+    "$date": "2024-08-22T08:43:53.556Z"
+  },
+  "updatedAt": {
+    "$date": "2024-08-22T08:43:53.556Z"
+  },
+  "brand_id": "66ebe5ae70ef8bf72a080162"
+},
+{
+  "_id": {
+    "$oid": "66fba63443d4ffea11097bd2"
+  },
+  "name": "c",
+  "slug": "c",
+  "price_per_day": 100,
+  "description": null,
+  "noi_bat": false,
+  "brand_id": "66e56aade3a5fd00a00022f3",
+  "updated_at": {
+    "$date": "2024-10-03T07:14:17.430Z"
+  },
+  "created_at": {
+    "$date": "2024-10-01T07:35:16.013Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "66fbc11c43d4ffea11097bd5"
+  },
+  "name": "d",
+  "slug": "d",
+  "price_per_day": 265,
+  "description": null,
+  "noi_bat": "true",
+  "brand_id": "66e56aade3a5fd00a00022f3",
+  "updated_at": {
+    "$date": "2024-10-01T09:30:04.946Z"
+  },
+  "created_at": {
+    "$date": "2024-10-01T09:30:04.946Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "66fbc17843d4ffea11097bd8"
+  },
+  "name": "ee",
+  "slug": "ee",
+  "price_per_day": 275,
+  "description": "aaa",
+  "noi_bat": "true",
+  "brand_id": "66ebe5ae70ef8bf72a080162",
+  "updated_at": {
+    "$date": "2024-10-02T16:40:52.435Z"
+  },
+  "created_at": {
+    "$date": "2024-10-01T09:31:36.088Z"
+  }
+}]

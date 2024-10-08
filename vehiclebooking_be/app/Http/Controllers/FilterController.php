@@ -8,48 +8,48 @@ use App\Http\Controllers\ProductController;
 
 class FilterController extends Controller
 {
-    public function filterByBrandName($query, $filters)
-    {
-        $query->whereHas('carBrand', function($q) use ($filters) {
-            $q->where('brand_name', $filters['brand_name']);
-        });
+    // public function filterByBrandName($query, $filters)
+    // {
+    //     $query->whereHas('carBrand', function($q) use ($filters) {
+    //         $q->where('brand_name', $filters['brand_name']);
+    //     });
 
-        return $query;
-    }
+    //     return $query;
+    // }
 
-    // Phương thức để lọc theo khoảng giá
-    public function filterByPriceRange($query, $filters)
-    {
-        if (isset($filters['price_min'])) {
-            $query->where('price', '>=', $filters['price_min']);
-        }
+    // // Phương thức để lọc theo khoảng giá
+    // public function filterByPriceRange($query, $filters)
+    // {
+    //     if (isset($filters['price_min'])) {
+    //         $query->where('price', '>=', $filters['price_min']);
+    //     }
 
-        if (isset($filters['price_max'])) {
-            $query->where('price', '<=', $filters['price_max']);
-        }
+    //     if (isset($filters['price_max'])) {
+    //         $query->where('price', '<=', $filters['price_max']);
+    //     }
 
-        return $query;
-    }
+    //     return $query;
+    // }
 
-    // Phương thức để lọc theo kiểu thân xe
-    public function filterByBody($query, $filters)
-    {
-        $query->whereHas('carSpecification', function($q) use ($filters) {
-            $q->where('body', $filters['body']);
-        });
+    // // Phương thức để lọc theo kiểu thân xe
+    // public function filterByBody($query, $filters)
+    // {
+    //     $query->whereHas('carSpecification', function($q) use ($filters) {
+    //         $q->where('body', $filters['body']);
+    //     });
 
-        return $query;
-    }
+    //     return $query;
+    // }
 
-    // Phương thức để lọc theo số ghế
-    public function filterBySeats($query, $filters)
-    {
-        $query->whereHas('carSpecification', function($q) use ($filters) {
-            $q->where('seats', $filters['seats']);
-        });
+    // // Phương thức để lọc theo số ghế
+    // public function filterBySeats($query, $filters)
+    // {
+    //     $query->whereHas('carSpecification', function($q) use ($filters) {
+    //         $q->where('seats', $filters['seats']);
+    //     });
 
-        return $query;
-    }
+    //     return $query;
+    // }
 
     public function _getDataFilter(Request $request)
     {
@@ -87,7 +87,14 @@ class FilterController extends Controller
         });
 
         // Lấy danh sách các xe theo bộ lọc
-        $cars = $query->with(['specification', 'getImageCars'])->get();
+        // $cars = $query->with(['specification', 'getImageCars'])->get();
+        $cars = [];
+        $query->with(['specification', 'getImageCars'])->chunk(100, function ($chunk) use (&$cars) {
+            // Thêm mỗi lô kết quả vào mảng $cars
+            foreach ($chunk as $car) {
+                $cars[] = $car;
+            }
+        });
         // Trả về kết quả dưới dạng JSON
         return response()->json($cars);
     }

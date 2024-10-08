@@ -8,9 +8,10 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use MongoDB\Laravel\Eloquent\Model;
 use MongoDB\Laravel\Auth\User as Authenticatable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -50,4 +51,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey(); // Trả về ID của người dùng
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return []; // Có thể trả về một mảng chứa các claims tùy chỉnh nếu cần
+    }
 }
