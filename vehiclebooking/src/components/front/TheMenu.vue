@@ -76,8 +76,10 @@ const menuItems = ref([
         subMenu: [],
     },
 ]);
+import { useStore } from 'vuex';
+const store = useStore();
 const isLoggedIn = computed(() => {
-    return !!sessionStorage.getItem('user_info'); // Kiểm tra sự tồn tại của thông tin người dùng trong sessionStorage
+    return !!store.getters.user; // Kiểm tra sự tồn tại của thông tin người dùng trong sessionStorage
 });
 const filteredMenuItems = computed(() => {
     if (isLoggedIn.value) {

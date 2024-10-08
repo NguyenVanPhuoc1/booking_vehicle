@@ -153,8 +153,9 @@
                                         <div class="car-image">
                                             <img
                                                 src="../../assets/front/images/bmw-m5.jpg"
-                                                class="d-block w-100 rounded"
+                                                class="d-block w-100 rounded object-fit-cover "
                                                 alt="Ảnh sản phẩm"
+                                                style="max-height: 224px;"
                                             />
                                         </div>
                                         <div class="car-detail">
@@ -476,7 +477,8 @@ import { ref, onMounted, computed } from "vue";
 // thư viện vuex
 import { useStore } from "vuex";
 import { useRouter } from 'vue-router';
-import apiClient from '@/services/ApiClient';
+const store = useStore();
+const apiClient = store.getters.apiClient;
 // rellax
 import Rellax from 'rellax';
 import AOS from 'aos';
@@ -485,33 +487,35 @@ onMounted(() => {
     document.title = "Trang Chủ";
 });
 
-const store = useStore();
 // set chiều cao cho header với carrousel
 const headerHeight = computed(() => store.getters.headerHeight);
 
 // count number
 const counters = ref([
-    { target: 12312, current: 0, title: "Completed Orders" },
-    { target: 8745, current: 0, title: "Happy Customer" },
+    { target: 800, current: 0, title: "Completed Orders" },
+    { target: 527, current: 0, title: "Happy Customer" },
     { target: 235, current: 0, title: "Vehicles Fleet" },
     { target: 15, current: 0, title: "Years Experience" },
 ]);
 
-const duration = 2000; // Thời gian tính bằng mili giây
+const duration = 2000; // Tổng thời gian tính bằng mili giây
+const interval = 10; // Khoảng thời gian giữa mỗi lần cập nhật (10ms)
 
 const updateCounter = (item) => {
-    const diff = item.target - item.current; 
+    const steps = duration / interval; // Tổng số bước cập nhật
+    const increment = (item.target - item.current) / steps; // Tính toán bước nhảy cho mỗi bước
 
-    const increment = Math.max(2, Math.floor(diff / (duration / 10)));
-    // Cập nhật giá trị hiện tại của mục
-    item.current += increment;
+    // Cập nhật giá trị hiện tại
+    item.current += Math.max(2, Math.floor(increment));
+
     if (item.current < item.target) {
-        setTimeout(() => updateCounter(item), 10);
+        setTimeout(() => updateCounter(item), interval);
     } else {
-        item.current = item.target;
+        item.current = item.target; // Đảm bảo chính xác đạt giá trị target
     }
 };
 
+// Khởi động quá trình khi thành phần được mount
 onMounted(() => {
     counters.value.forEach((item) => {
         updateCounter(item);
@@ -519,13 +523,17 @@ onMounted(() => {
 });
 
 
-onMounted(() => {
+onMounted(async () => {
     const rellax = new Rellax('.rellax');
     AOS.init({
         duration: 1200, // Thời gian của hiệu ứng
     });
-    fetchCarsOutStanding();
-    fetchNewsOutStanding();
+
+    try {
+        await Promise.all([fetchCarsOutStanding(), fetchNewsOutStanding()]);
+    } catch (err) {
+        console.error('Error fetching data:', err);
+    }
 });
 // questions
 const items = ref([
@@ -563,10 +571,12 @@ const fetchCarsOutStanding = async () => {
             console.log('Error fetching cars:', err);
         }   
     };
-    const fetchNewsOutStanding = async () => {
+const fetchNewsOutStanding = async () => {
         try {
             error.value = null;
-            const data = await apiClient.fetchData('/get-news-outstanding',{});
+            const data = await apiClient.fetchData('/get-news-outstanding',{
+                page : 'index_page',
+            });
             news_outstanding.value = data.map(news => {
                 const date = new Date(news.created_at);
                 const formattedDate = date.toLocaleDateString('en-US', {

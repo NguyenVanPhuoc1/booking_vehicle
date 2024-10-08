@@ -5,11 +5,11 @@
         <!-- main -->
         <div class="container-fluid ">
             <div class="row">
-                <div class="col-sm-2 d-none d-lg-flex px-0 w-auto " :style="{ height: headerHeight  + 'px'}">
+                <div class="col-lg-2 d-none d-lg-flex  menucol border border-1 bg-light"  :style="{ height: 'auto', width: 'auto'}">
                     <TheMenu />
                 </div>
     
-                <div class="col-12 col-lg-10 mt-3">
+                <div class="col-12 col-lg-10 mt-3 viewcol">
                     <router-view></router-view>
                 </div>
             </div>
@@ -23,12 +23,11 @@ import TheHeader from "../components/admin/TheHeader.vue";
 import TheMenu from "../components/admin/TheMenu.vue";
 import TheFooter from "../components/admin/TheFooter.vue";
 
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, onUnmounted, watch  } from "vue";
 const headerRef = ref(null);
 onMounted(() => {
         document.title = "Admin";
     });
-    // set chiều cao cho menu
-    const headerHeight = window.innerHeight - 64;
+
 
 </script>

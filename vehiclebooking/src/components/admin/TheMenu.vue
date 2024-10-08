@@ -1,19 +1,19 @@
 <template>
-    <a-list  style="width: 100%;" class="menu bg-light" bordered
-    :style="{ width: state.collapsed ? '80px' : '245px' }">
-
-        <div class="d-flex justify-content-around py-3 border-bottom">
-            <div class="fw-bold menu-name" >Bảng Điều Khiển</div>
-            <a-button type="primary"  @click="toggleCollapsed">
-                <MenuUnfoldOutlined v-if="state.collapsed" />
-                <MenuFoldOutlined v-else />
-            </a-button>
+    <a-list class="menu bg-light" :style="{ width: state.collapsed ? '80px' : 'auto' }">
+        <div class="border-bottom py-3">
+            <div class="d-none d-sm-flex justify-content-around">
+                <div class="fw-bold menu-name">Bảng Điều Khiển</div>
+                <a-button type="primary" @click="toggleCollapsed">
+                    <MenuUnfoldOutlined v-if="state.collapsed" />
+                    <MenuFoldOutlined v-else />
+                </a-button>
+            </div>
         </div>
-        <a-menu class="bg-light"
-            :default-open-keys="state.openKeys"
-            :default-selected-keys="state.selectedKeys"
+        <a-menu class="bg-light border-0"
+            :open-keys="state.openKeys"
+            :selected-keys="state.selectedKeys" 
             @update:open-keys="handleOpenKeysChange"
-            @update:selected-keys="handleSelectedKeysChange"
+            @click="handleSelectedKeysChange" 
             mode="inline"
         >
             <!-- Duyệt qua danh sách items để render các menu item -->
@@ -24,15 +24,14 @@
                         <span>{{ item.label }}</span>
                     </router-link>
                 </a-menu-item>
-                <a-sub-menu v-else >
-                    <template #title >
-                        <!-- Sử dụng item.icon() để render icon -->
+                <a-sub-menu v-else>
+                    <template #title>
                         <component :is="item.icon" />
                         <span>{{ item.label }}</span>
                     </template>
                     <template #default>
-                        <div v-for="child  in item.children" :key="child.key">
-                            <a-menu-item >
+                        <div v-for="child in item.children" :key="child.key">
+                            <a-menu-item :key="child.key">
                                 <router-link :to="{ name: child.key }" class="text-decoration-none">
                                     <span>{{ child.label }}</span>
                                 </router-link>
@@ -46,7 +45,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive } from "vue";
+import { ref, reactive } from "vue";
 import {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
@@ -54,12 +53,11 @@ import {
     DesktopOutlined,
     InboxOutlined,
 } from "@ant-design/icons-vue";
-import { RouterLink } from "vue-router";
 
 const state = reactive({
     collapsed: false,
     selectedKeys: ["admin-dashboard"],
-    openKeys: ["admin-dashboard","admin-users", "admin-roles", "admin-setting","admin-brand-product"],
+    openKeys: ["admin-dashboard", "admin-users", "admin-roles", "admin-setting", "admin-brand-product"],
 });
 
 // Khai báo danh sách menu với icon tương ứng
@@ -102,13 +100,14 @@ const handleOpenKeysChange = (keys) => {
 };
 
 // Xử lý sự kiện thay đổi selectedKeys
-const handleSelectedKeysChange = (keys) => {
-    state.selectedKeys = keys;
+const handleSelectedKeysChange = (item) => {
+    state.selectedKeys = [item.key];  // Chỉ lưu phần tử được click
 };
+
 const toggleCollapsed = () => {
-    if(state.collapsed){
+    if (state.collapsed) {
         document.querySelector('.menu-name').style = 'display:block';
-    }else{
+    } else {
         document.querySelector('.menu-name').style = 'display:none';
     }
     state.collapsed = !state.collapsed;

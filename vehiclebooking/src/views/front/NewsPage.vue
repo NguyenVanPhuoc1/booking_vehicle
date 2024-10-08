@@ -52,7 +52,8 @@
     // thư viện vuex
     import { useStore } from "vuex";
     import Rellax from 'rellax';
-    import apiClient from '@/services/ApiClient';
+    const store = useStore();
+    const apiClient = store.getters.apiClient;
     onMounted(() => {
         const rellax = new Rellax('.rellax');
     });
@@ -63,7 +64,6 @@
          // Thêm sự kiện cuộn
         window.addEventListener('scroll', handleScroll);
     });
-    const store = useStore();
     // set chiều cao cho header với carrousel
     const headerHeight = computed(() => store.getters.headerHeight);
 

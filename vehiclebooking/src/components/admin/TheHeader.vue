@@ -5,7 +5,7 @@
             <div class="container-fluid">
                 <div class="row text-white" >
                     <div class="col-1 d-flex d-sm-none align-items-center justify-content-center ">
-                        <span @click="showDrawer()"> X</span>
+                        <span @click="showDrawer()"> <font-awesome-icon :icon="['fas', 'bars']" /></span>
                     </div>
         
                     <div class="col-sm-3 d-none d-sm-flex align-items-center justify-content-center justify-content-sm-start">
@@ -21,12 +21,12 @@
                                 </router-link>
                             </li>
                             <li class="nav-item py-0">
-                                <router-link class="nav-link text-white-50 px-3" :to="''" @click.prevent="logout">
+                                <router-link class="nav-link text-white-50 px-3" :to="''" @click.prevent="logout('signout')">
                                     Đăng Xuất
                                 </router-link>
                             </li>
                             <li class="nav-item py-0">
-                                <router-link class="nav-link text-white-50 px-3" :to="{ name: 'frontend-index' }" target="_blank">
+                                <router-link class="nav-link text-white-50 px-3" @click.prevent="logout('index')" target="_blank">
                                     <font-awesome-icon :icon="['fas', 'reply']" />
                                     Trang Chủ
                                 </router-link>
@@ -56,7 +56,7 @@
                     </div>
         
                     <div class="col-1 d-flex d-sm-none align-items-center justify-content-center ">
-                        <span @click="showDrawerUser()">X</span>
+                        <span @click="showDrawerUser()"><font-awesome-icon :icon="['fas', 'bars']" /></span>
                     </div>
                 </div>
             </div>
@@ -102,14 +102,21 @@
     // logo
     import logo from '@/assets/logo.png';
     const logoUrl = logo;
-const logout = async () => {
+    import { useStore } from 'vuex';
+const store = useStore();
+// Hàm đăng xuất
+const logout = async (action) => {
     console.log('đăng xuất');
     // Xóa thông tin người dùng từ Vuex store
-    // store.dispatch('logout');
+    store.dispatch('clearUser');
 
     // Xóa thông tin người dùng từ sessionStorage
-    sessionStorage.removeItem('user_info');
+    sessionStorage.removeItem('access_token');
     // Chuyển hướng về trang đăng nhập hoặc trang chủ
-    window.location.href = '/login'; // Hoặc sử dụng this.$router.push('/login') nếu bạn đang dùng Vue Router
+    if(action === 'signout'){ 
+        window.location.href = '/login'; 
+    }else{
+        window.open('/', '_blank');
+    }
 };
 </script>

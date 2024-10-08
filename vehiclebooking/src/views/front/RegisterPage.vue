@@ -69,6 +69,7 @@
         document.title = "Register";
     });
     const store = useStore();
+    const apiClient = store.getters.apiClient;
     // set chiều cao cho header với carrousel
     const headerHeight = computed(() => store.getters.headerHeight);
 
@@ -97,7 +98,7 @@ const register = async () => {
         
         // Send POST request to server
         await getToken();
-        const response = await axios.post('http://127.0.0.1:8000/api/register', {
+        const response = await apiClient.postData('/register', {
             name: name.value,
             email: email.value,
             password: password.value,

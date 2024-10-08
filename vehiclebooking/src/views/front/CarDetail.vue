@@ -25,17 +25,18 @@
                             <div v-for="item in images.length" :key="item">
                                 <img
                                     :src="getImgUrl(item - 1)"
-                                    class="carousel-img w-100"
+                                    class="carousel-img w-100 object-fit-cover"
                                 />
                             </div>
                         </a-carousel>
                         <div class="row my-3 thumbimg-list justify-content-center">
-                            <div class="col-lg-3" v-for="item in images.length" :key="item">
+                            <div class="col-3" v-for="item in images.length" :key="item">
                                 <img
                                     :src="getImgUrl(item - 1)"
                                     :class="{ active: currentSlide === item - 1 }"
-                                    class="thumbimg-item w-100 rounded"
+                                    class="thumbimg-item w-100 rounded object-fit-cover"
                                     @click="goToSlide(item - 1)"
+                                    style="max-height: 79px;"
                                 />
                             </div>
                         </div>
@@ -75,7 +76,7 @@
                             <div class="de-spec" v-if="arr_spec">
                                 <!-- list speci -->
                                 <ul v-for="(value, key) in arr_spec" :key="key" class="list-group list-group-flush">
-                                    <li class="list-group-item d-flex justify-content-between">
+                                    <li v-if="value !== null" class="list-group-item d-flex justify-content-between">
                                         <!-- hàm viết hoa kí tự đầu -->
                                         <span class="d-title">{{ key.charAt(0).toUpperCase() + key.slice(1) }}</span>
                                         <span class="d-value fw-bold">{{ value }}</span>
@@ -214,13 +215,15 @@
 import { ref, onMounted, computed, watch} from "vue";
 // thư viện vuex
 import { useStore } from "vuex";
-import { useRoute } from 'vue-router';
+import { useRoute,useRouter } from 'vue-router';
 import axios from 'axios';
-import apiClient from '@/services/ApiClient';
+//import apiClient from '@/services/ApiClient';
 onMounted(() => {
     document.title = "Car Detail";
 });
 const store = useStore();
+const apiClient = store.getters.apiClient;
+const router = useRouter();
 // set chiều cao cho header với carrousel
 const headerHeight = computed(() => store.getters.headerHeight);
 
@@ -231,7 +234,7 @@ const currentSlide = ref(0);
 const images = ref([]);
 
 const getImgUrl = (index) => {
-    return '../../../src/assets/front/images/' + images.value[index];
+    return images.value[index];
 };
 const goToSlide = (index) => {
     if (carouselRef.value) {
@@ -249,21 +252,26 @@ const arr_image = ref(null);
 const fetchCarDetail = async () => {
     try {
         const response = await apiClient.fetchData(`/car-detail/${slug}`);
-        carDetail.value = response[0]; 
-        const imageCars = carDetail.value.get_image_cars;
-        arr_image.value = (imageCars.length > 0) ? imageCars[0].url_img : [];
-        images.value = [...arr_image.value];
-        //dùng cú pháp destructuring để loại bỏ các trường k cần thiết
-        if (carDetail.value.specification) {
-            const { _id, car_id, car_slug, ...rest } = carDetail.value.specification;
-            arr_spec.value = rest;
-        } else {
-            arr_spec.value = null; 
+        if(response.status === 404){
+            router.push('/404');
+        }else{
+            carDetail.value = response[0]; 
+            const imageCars = carDetail.value.get_image_cars;
+            arr_image.value = (imageCars.length > 0) ? imageCars[0].url_img : [];
+            images.value = [...arr_image.value];
+            //dùng cú pháp destructuring để loại bỏ các trường k cần thiết
+            if (carDetail.value.specification) {
+                const { _id, car_id, car_slug, ...rest } = carDetail.value.specification;
+                arr_spec.value = rest;
+            } else {
+                arr_spec.value = null; 
+            }
+            console.log(arr_image.value);
         }
-        console.log(arr_image.value);
         // return carDetail.value;
     } catch (error) {
-        console.error('Error fetching car detail:', error);
+        // console.error('Error fetching car detail:', error);
+        router.push('/404');
     }
 };
 
@@ -311,7 +319,7 @@ const bookingSubmit = async() => {
             // Lấy CSRF token
             await getToken();
             // Gửi dữ liệu booking đến server
-            const response = await axios.post('http://127.0.0.1:8000/api/booking', {
+            const response = await apiClient.postData('/booking', {
                 selected_car: formData.value.selectedOption,
                 pickup_location: formData.value.pickUpLocation,
                 destination: formData.value.destination,

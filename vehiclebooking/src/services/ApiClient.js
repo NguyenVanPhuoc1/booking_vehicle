@@ -1,33 +1,60 @@
-// class connect vuejs with api
 import axios from 'axios';
-
 class ApiClient {
-    constructor(baseURL) {
+
+    constructor(baseUrl) {
+        this._baseUrl = baseUrl; // Đặt baseURL vào thuộc tính riêng
         this.client = axios.create({
-            baseURL: baseURL,
+            baseURL: this._baseUrl,
             timeout: 1000,
         });
     }
 
+    // Getter cho baseURL
+    get baseUrl() {
+        return this._baseUrl;
+    }
+
+    // Setter cho baseURL
+    set baseUrl(newBaseUrl) {
+        this._baseUrl = newBaseUrl;
+        this.client.defaults.baseURL = newBaseUrl; // Cập nhật baseURL trong axios client
+    }
+
+    // Hàm GET
     async fetchData(endpoint, params = {}) {
         try {
             const response = await this.client.get(endpoint, { params });
             return response.data;
         } catch (error) {
-            if (error.response) {
-                // Nếu có phản hồi lỗi từ server
-                console.log(`Error fetching data from ${endpoint}: ${error.response.status} - ${error.response.statusText}`);
-            } else if (error.request) {
-                // Nếu không có phản hồi từ server
-                console.log(`Error fetching data from ${endpoint}: No response received`);
-            } else {
-                // Lỗi khác
-                console.log(`Error fetching data from ${endpoint}: ${error.message}`);
-            }
-            // Ném lỗi lên hoặc xử lý lỗi ở đây tùy theo yêu cầu
-            // throw new Error('Unable to fetch data');
+            this.handleError(error, endpoint);
+        }
+    }
+
+    // Hàm POST
+    async postData(endpoint, data, headers = {}) {
+        const response = await this.client.post(endpoint, data, { headers });
+        return response;
+    }
+
+    // Hàm PUT
+    async updateData(endpoint, data, headers = {}) {
+        const response = await this.client.put(endpoint, data, { headers });
+        return response;
+    }
+
+    // Hàm xử lý lỗi chung
+    handleError(error, endpoint) {
+        if (error.response) {
+            console.log(`Error fetching data from ${endpoint}: ${error.response.status} - ${error.response.statusText}`);
+            // window.location.href = '/404';
+        } else if (error.request) {
+            console.log(`Error fetching data from ${endpoint}: No response received`);
+        } else {
+            console.log(`Error fetching data from ${endpoint}: ${error.message}`);
         }
     }
 }
+
+// Khởi tạo ApiClient
 const apiClient = new ApiClient('http://127.0.0.1:8000/api');
 export default apiClient;

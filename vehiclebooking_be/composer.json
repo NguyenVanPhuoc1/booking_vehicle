@@ -8,13 +8,16 @@
         "php": "^8.1",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.0",
+        "laravel/passport": "^11.8",
         "laravel/sanctum": "^3.3",
         "laravel/socialite": "^5.15",
         "laravel/tinker": "^2.8",
         "mongodb/laravel-mongodb": "4.7",
+        "tymon/jwt-auth": "^2.1",
         "vormkracht10/laravel-google-analytics-v4": "^1.2.5"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.14",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",

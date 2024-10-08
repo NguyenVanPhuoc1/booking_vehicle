@@ -8,10 +8,17 @@ use App\Models\News;
 class NewsController extends Controller
 {
     //lấy tin nổi bật
-    public function _getDataNewsOutstanding(){
+    public function _getDataNewsOutstanding(Request $request){
         try{
-            // $news = News::where('noi_bat','=',true)->orderBy('created_at', 'desc')->get();
-            $news = News::where('noi_bat','=',true)->get();
+            //return về câu query
+            $newsQuery = News::orderBy('created_at', 'desc');
+
+            if ($request->input('page') === 'index_page') {
+                $newsQuery->where('noi_bat', '=', true)->limit(3);
+            }
+            
+            $news = $newsQuery->get();
+            
             return response()->json($news);
         }
         catch(\Exception $e){

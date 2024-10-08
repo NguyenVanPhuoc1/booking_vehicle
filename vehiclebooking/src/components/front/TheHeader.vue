@@ -149,11 +149,11 @@ const handleScroll = () => {
 
 // Vuex store
 const store = useStore();
-// console.log(store.getters.user.name);
-userName.value =  store.getters.user.name;
+userName.value =  store.getters.user ? store.getters.user.name : null;
 // Lifecycle hooks
 onMounted(() => {
     // Handle scroll event
+    // console.log(store.getters.user.name);
     window.addEventListener('scroll', handleScroll);
 
     // Retrieve user info from sessionStorage

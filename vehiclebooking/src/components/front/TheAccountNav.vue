@@ -32,6 +32,7 @@ import { useStore } from 'vuex';
 const userName = ref(null);
 const store = useStore();
 userName.value =  store.getters.user ? store.getters.user : "Nguyễn Văn A";
+// console.log(store.getters.user);
 // const pathSegment = ref('dasboard');
 const isActive = (name) => {
     const currentPath = window.location.pathname;
@@ -42,10 +43,10 @@ const isActive = (name) => {
 const logout = async () => {
     console.log('đăng xuất');
     // Xóa thông tin người dùng từ Vuex store
-    // store.dispatch('logout');
+    store.dispatch('clearUser');
 
     // Xóa thông tin người dùng từ sessionStorage
-    sessionStorage.removeItem('user_info');
+    sessionStorage.removeItem('access_token');
     // Chuyển hướng về trang đăng nhập hoặc trang chủ
     window.location.href = '/login'; // Hoặc sử dụng this.$router.push('/login') nếu bạn đang dùng Vue Router
 };

@@ -42,4 +42,10 @@ Route::get('/admin/get-all-brand', [CarBrandController::class, '_getAllBrand']);
 Route::get('/get-detail-brand', [CarBrandController::class, '_getDetailBrand']);
 Route::post('/add-brand', [CarBrandController::class, '_addBrand']);
 Route::put('/update-brand/{id}', [CarBrandController::class, '_updateBrand']);
-
+Route::put('/update-brand_noibat/{id}', [CarBrandController::class, '_checkBoxNoiBat']);
+Route::post('/delete-selected-brands', [CarBrandController::class, '_deleteSelectedBrands']);
+Route::get('/admin/get-all-products', [ProductController::class, '_getAllProduct']);
+Route::post('/add-product', [ProductController::class, '_addProduct']);
+Route::post('/update-product/{slug}', [ProductController::class, '_updateProduct']);
+Route::put('/update-product_noibat/{id}', [ProductController::class, '_checkBoxNoiBat']);
+Route::post('/delete-selected-products', [ProductController::class, '_deleteSelectedProducts']);

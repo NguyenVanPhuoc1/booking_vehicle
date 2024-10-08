@@ -10,6 +10,8 @@ use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Facades\JWTFactory;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Cookie;
 use Laravel\Socialite\Facades\Socialite;
@@ -57,22 +59,61 @@ class UserController extends Controller
     // đăng nhập tài khoản dưới các trường dữ liệu được nhập
     public function login(LoginRequest $request)
     {
-        if (Auth::attempt($request->only('email', 'password'))) {
-            $user = Auth::user();
+        try {
+            // Kiểm tra thông tin đăng nhập dùng auth(session based)
+            // if (Auth::attempt($request->only('email', 'password'))) {
+            //     $user = Auth::user();
 
-            // Kiểm tra xem tùy chọn "Nhớ Tôi" có được chọn không
-            if ($request->filled('remember_me') && $request->remember_me == true) {
-                Auth::login($user, true); // Bật tính năng "remember_me"
-            } else {
-                Auth::login($user, false);
+            //     // Kiểm tra xem tùy chọn "Nhớ Tôi" có được chọn không
+            //     if ($request->filled('remember_me') && $request->remember_me == true) {
+            //         Auth::login($user, true); // Bật tính năng "remember_me"
+            //     } else {
+            //         Auth::login($user, false);
+            //     }
+
+            //     return response()->json([
+            //         'user' => $user,
+            //         'message' => 'Đăng nhập thành công.',
+            //     ]);
+            // }
+
+            // // Nếu không đăng nhập được
+            // return response()->json(['error' => 'Email hoặc mật khẩu đăng nhập không đúng!'], 403);
+             // Kiểm tra thông tin đăng nhập dùng jwt(json web token)
+            $credentials = $request->only('email', 'password');
+            $remember = $request->has('remember_me') && $request->remember_me == true;
+            $ttl = $remember ? (60 * 24 * 7) : 60;
+            if (!$token = JWTAuth::attempt($credentials)) {
+                return response()->json(['error' => 'Thông tin đăng nhập không chính xác'], 401);
             }
+            $user = $this->me();
+            $token = JWTFactory::setTTL($ttl)->fromUser($user);
+
+            return $this->respondWithToken($token,$user);
+        
+        } catch (\Exception $e) {
+            // Bắt mọi lỗi và trả về phản hồi với chi tiết lỗi
             return response()->json([
-                'user' => $user,
-                'message' => 'Đăng nhập thành công.',
-            ]);
+                'error' => 'Đã xảy ra lỗi trong quá trình đăng nhập.',
+                'message' => $e->getMessage(), // Bạn có thể hiển thị chi tiết lỗi trong quá trình phát triển
+            ], 500); // Trả về mã lỗi 500 - Lỗi máy chủ
         }
-        return response()->json(['error' => 'Email hoặc mật khẩu đăng nhập không đúng!'], 403);
     }
+    protected function respondWithToken($token,$user)
+    {
+        // $user = $this->me();
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'user' => $user,
+        ],200);
+    }
+    // lấy thông tin người dùng
+    public function me()
+    {
+        return response()->json(auth()->user());
+    }
+
     // đăng nhập với Google
     public function redirectToGoogle()
     {
@@ -185,7 +226,7 @@ class UserController extends Controller
             }
             return response()->json(['message' => 'Cập nhật thành công' ,'user' => $user], 200);
         }catch ( \Exception $e){
-            return response()->json(['error' => 'Không cập nhật được'], 200);
+            return response()->json(['error' => 'Không cập nhật được'], 404);
         }
     }
 }
