@@ -9,13 +9,20 @@ use App\Models\CarImages;
 use App\Models\CarsSpecifications;
 use App\Http\Requests\ProductRequest;
 use Illuminate\Support\Facades\Storage;
+use App\Service\CarService;
 
 class ProductController extends Controller
 {
+    protected $carService;
+
+    public function __construct(CarService $carService)
+    {
+        $this->carService = $carService;
+    }
     public function _getCarOutstanding(){
         try{
-            $cars = Cars::where('noi_bat','=',true)->orderBy('createdAt', 'desc')->get();
-            // $cars = Cars::where('noi_bat','=','true')->get();
+            // $cars = Cars::where('noi_bat','=',true)->orderBy('createdAt', 'desc')->get();
+            $cars = $this->carService->getCarOutstanding();
             return response()->json($cars);
         }
         catch(\Exception $e){
@@ -28,7 +35,8 @@ class ProductController extends Controller
     public function _getDataCarDetail_slug($slug){
         try {
             // Lấy thông tin chi tiết của xe và bao gồm cả specification và getImageCars
-            $car = Cars::where('slug', '=', $slug)->get(); 
+            // $car = Cars::where('slug', '=', $slug)->get(); 
+            $car = $this->carService->productbyGet($slug);
             $car_detail = $car->load(['specification','getImageCars']);
             if (count($car_detail) < 1) {
                 
@@ -58,10 +66,10 @@ class ProductController extends Controller
     
     protected function productNameExists($slug, $ignoreId = null)
     {
-        $query = Cars::where('slug', $slug)->first();
+        // $query = Cars::where('slug', $slug)->first();
 
-        return $query;
-        // return $query->limit(1)->count('_id') > 0;
+        // return $query;
+        return $this->carService->productbyFirst($slug);
     }
     //add product
     public function _addProduct(ProductRequest $request){
@@ -79,7 +87,7 @@ class ProductController extends Controller
                 'slug' => $request->input('slug_name_product'),
                 'price_per_day' => intval($request->input('price')),
                 'description' => $request->input('product_desc'),
-                'noi_bat' => $request->input('noi_bat'),
+                'noi_bat' => filter_var($request->input('noi_bat'), FILTER_VALIDATE_BOOLEAN),
                 'brand_id' => $request->input('brand_id'),
             ]);
             CarsSpecifications::insert([
@@ -122,7 +130,7 @@ class ProductController extends Controller
                         'slug' => $request->input('slug_name_product'),
                         'price_per_day' => intval($request->input('price')),
                         'description' => $request->input('product_desc'),
-                        'noi_bat' => $request->input('noi_bat'),
+                        'noi_bat' => filter_var($request->input('noi_bat'), FILTER_VALIDATE_BOOLEAN),
                         'brand_id' => $request->input('brand_id'),
                     ]);
                     //Lọc và chuẩn bị dữ liệu cho bảng CarsSpecifications
@@ -157,10 +165,10 @@ class ProductController extends Controller
 
     public function _checkBoxNoiBat(Request $request, $id)
     {
-        $product = Cars::findOrFail($id);
-
+        // $product = Cars::findOrFail($id);
+        $product = $this->carService->findCarById($id);
         // Cập nhật trường 'noi_bat' với giá trị từ request
-        $product->noi_bat = $request->input('noi_bat');
+        $product->noi_bat = filter_var($request->input('noi_bat'), FILTER_VALIDATE_BOOLEAN);
         $product->save();
 
         return response()->json(['message' => 'Product updated successfully'], 200);

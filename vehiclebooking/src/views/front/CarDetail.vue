@@ -79,7 +79,7 @@
                                     <li v-if="value !== null" class="list-group-item d-flex justify-content-between">
                                         <!-- hàm viết hoa kí tự đầu -->
                                         <span class="d-title">{{ key.charAt(0).toUpperCase() + key.slice(1) }}</span>
-                                        <span class="d-value fw-bold">{{ value }}</span>
+                                        <span class="d-value fw-bold">{{ typeof value === 'string' ? value.slice(0, 10) : value }}</span>
                                     </li>
                                 </ul>
                             </div>
