@@ -1,0 +1,25 @@
+{
+    "version": 2,
+    "builds": [
+    {
+        "src": "server.php",
+        "use": "@vercel/php"
+    }
+    ],
+    "routes": [
+    {
+        "src": "/(.*)",
+        "dest": "server.php"
+    }
+    ],
+    "env": {
+        "VUE_APP_URL":"http://localhost:5173",
+        "MONGODB_URL": "mongodb+srv://phuoc031123nina:rlGV3rr0E74TIYQt@wecommit.w2roy.mongodb.net/wecommit?retryWrites=true&w=majority&appName=wecommit",
+        "DB_CONNECTION": "mongodb",
+        "DB_HOST": "localhost",
+        "DB_PORT": "27017",
+        "DB_DATABASE": "wecommit",
+        "DB_USERNAME": "",
+        "DB_PASSWORD": ""
+    }
+}
