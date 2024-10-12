@@ -8,4 +8,7 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    build: {
+        outDir: 'dist', // Đảm bảo thư mục đầu ra là 'dist'
+    },
 });

@@ -105,6 +105,14 @@ return [
                 'database' => env('DB_AUTHENTICATION_DATABASE', 'users')
             ],
         ],
+        // 'mongodb' => [
+        //     'driver' => 'mongodb',
+        //     'dsn' => env('MONGODB_URL'), // Sử dụng DSN để kết nối
+        //     'database' => env('DB_DATABASE', 'wecommit'),
+        //     'options' => [
+        //         'ssl' => true, // Nếu bạn sử dụng MongoDB Atlas hoặc cần kết nối an toàn
+        //     ],
+        // ],
 
     ],
 
