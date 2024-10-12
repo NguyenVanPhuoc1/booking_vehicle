@@ -18,6 +18,7 @@
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "true",
+        "APP_KEY" : "base64:OjZqbyq8rYO98rQ+esBrmv2jFWQDdNqd5n8i9DAbhaM=",
         "APP_URL": "https://booking-vehicle-serve.vercel.app/",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
