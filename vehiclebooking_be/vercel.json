@@ -11,6 +11,10 @@
             "dest": "/public/img/"
         },
         {
+            "src": "/api/(.*)", // Tất cả yêu cầu đến /api/ sẽ đi đến index.php
+            "dest": "/api/index.php"
+        },
+        {
             "src": "/(.*)",
             "dest": "/api/index.php"
         }
