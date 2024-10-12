@@ -23,6 +23,7 @@ class UserController extends Controller
     // lấy data người dùng
     public function index(Request $request) 
     {
+        dd('hello);die();
         // Lấy số bản ghi mỗi trang từ yêu cầu, mặc định là 100
         $perPage = $request->input('per_page', 10);
         $page = $request->input('page', 1);
