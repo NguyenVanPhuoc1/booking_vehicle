@@ -25,6 +25,7 @@
                     </router-link>
                 </a-menu-item>
                 <a-sub-menu v-else>
+                    <!-- //recursive component: dùng để gọi đệ quy 1 temple trong menu -->
                     <template #title>
                         <component :is="item.icon" />
                         <span>{{ item.label }}</span>

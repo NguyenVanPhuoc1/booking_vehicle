@@ -20,21 +20,32 @@ class CarService
         $query = Cars::query();
         return $query;
     }
+    // get product detail
+    public function productDetail($slug, $ignoreId = null)
+    {
+        $product = $this->getQuery()->where('slug', $slug);
+
+        return $product;
+    }
+    //action là load hoặc with , $relations = [] là các hàm
+    public function productDetailbyAction($action, $relations = []){
+        
+    }
     //lấy theo phương thức first
     // nếu dùng static :: thì tự động tạo câu query nếu đã có query thì nên dùng ->
-    public function productbyFirst($slug, $ignoreId = null)
-    {
-        $product = $this->getQuery()->where('slug', $slug)->first();
+    // public function productbyFirst($slug, $ignoreId = null)
+    // {
+    //     $product = $this->getQuery()->where('slug', $slug)->first();
 
-        return $product;
-    }
-    //lấy theo phương thức get
-    public function productbyGet($slug, $ignoreId = null)
-    {
-        $product = $this->getQuery()->where('slug', $slug)->get();
+    //     return $product;
+    // }
+    // //lấy theo phương thức get
+    // public function productbyGet($slug, $ignoreId = null)
+    // {
+    //     $product = $this->getQuery()->where('slug', $slug)->get();
 
-        return $product;
-    }
+    //     return $product;
+    // }
     // Hàm tìm xe theo ID
     public function findCarById($id)
     {
@@ -44,8 +55,12 @@ class CarService
 
     public function getCarOutstanding()
     {
-        $product_list = $this->getQuery()->where('noi_bat', '=', true)->orderBy('createdAt', 'desc')->limit(10)->get();
-        // $product_list = Cars::where('noi_bat', true)->orderBy('createdAt', 'desc')->limit(10)->get();
+        $product_list = $this->getQuery()
+        ->with(['specification', 'getImageCars'])
+        ->where('noi_bat', '=', true)
+        ->orderBy('createdAt', 'desc')
+        ->select('name', 'price_per_day')
+        ->limit(10)->get();
         return $product_list;
     }
     public function getFilteredCars(array $filters)

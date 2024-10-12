@@ -124,35 +124,14 @@
                     <!-- car-list -->
                     <div class="car-list">
                         <div class="rows">
-                            <!-- <VueSlickCarousel
-                                :dots="true"
-                                :arrows="true"
-                                :autoplaySpeed="2000"
-                                :infinite="true"
-                                :responsive="[
-                                    {
-                                        breakpoint: 1024, // iPad và các thiết bị có độ rộng >= 1024px
-                                        settings: {
-                                            slidesToShow: 3,
-                                            slidesToScroll: 1,
-                                        },
-                                    },
-                                    {
-                                        breakpoint: 600, // Thiết bị di động có độ rộng < 1024px
-                                        settings: {
-                                            slidesToShow: 2,
-                                            slidesToScroll: 1,
-                                        },
-                                    },
-                                ]"
-                            > -->
                             <div class="row">
+                                <Carousel  :autoplay="5000" :wrap-around="true" v-bind="setting" :breakpoints="breakpoints">
                                 <!-- car item -->
-                                <div v-for="(car,index) in car_outstanding" :key="index" class="col-12 col-lg-4 col-md-6 my-4">
-                                    <div class="car-item rounded p-2 border">
+                                <Slide v-for="(car,index) in car_outstanding" :key="index" class="col-12 col-lg-4 col-md-6 my-4 mx-2">
+                                    <div class="car-item rounded p-2 border w-100">
                                         <div class="car-image">
                                             <img
-                                                src="../../assets/front/images/bmw-m5.jpg"
+                                                :src="car.get_image_cars[0].url_img[0]"
                                                 class="d-block w-100 rounded object-fit-cover "
                                                 alt="Ảnh sản phẩm"
                                                 style="max-height: 224px;"
@@ -191,9 +170,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </Slide>
+                                <template #addons>
+                                    <Navigation />
+                                </template>
+                                </Carousel>
                             </div>
-                            <!-- </VueSlickCarousel> -->
                         </div>
                     </div>
                 </div>
@@ -469,14 +451,11 @@
 
 <script setup >
 // vue slick slider
-import "vue-slick-carousel/dist/vue-slick-carousel.css";
-import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
-import VueSlickCarousel from "vue-slick-carousel";
-import "animate.css/animate.min.css";
 import { ref, onMounted, computed } from "vue";
+import { Carousel, Slide, Navigation }  from 'vue3-carousel';
 // thư viện vuex
 import { useStore } from "vuex";
-import { useRouter } from 'vue-router';
+// import { useRouter } from 'vue-router';
 const store = useStore();
 const apiClient = store.getters.apiClient;
 // rellax
@@ -489,7 +468,24 @@ onMounted(() => {
 
 // set chiều cao cho header với carrousel
 const headerHeight = computed(() => store.getters.headerHeight);
-
+const setting =  ref({
+        itemsToShow: 3,
+        snapAlign: 'center',
+    });
+const breakpoints = {
+    576: {
+        itemsToShow: 1,
+        snapAlign: 'center',
+    },
+    700: {
+        itemsToShow: 2,
+        snapAlign: 'center',
+    },
+    1024: {
+        itemsToShow: 3,
+        snapAlign: 'center',
+    },
+};
 // count number
 const counters = ref([
     { target: 800, current: 0, title: "Completed Orders" },

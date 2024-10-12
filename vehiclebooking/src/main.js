@@ -35,8 +35,10 @@ import 'bootstrap/dist/css/bootstrap-utilities.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 
 // import $ from 'jquery';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+
+import 'vue3-carousel/dist/carousel.css';
+//animate
+import "animate.css/animate.min.css";
 // import 'slick-carousel';
 
 // ckediter vue
@@ -79,6 +81,7 @@ app.use(Toast, {
     icon: true,
     rtl: false,
 });
+
 
 // font awesome
 import { faPhone, faBars, faTrophy, faAngleUp, faAngleDown, faHome, faUser, faCalendarDay, faCar, 
