@@ -160,8 +160,8 @@ class UserController extends Controller
             ';
             // return redirect("http://localhost:5173/")->withHeader('userName',$user->name);
         } catch (\Exception $e) {
-            // Xử lý lỗi nếu có
-            return redirect('http://localhost:5173/login?error=auth_failed');
+            // Xử lý lỗi nếu có https://booking-vehicle-hibw.vercel.app/
+            return redirect('https://booking-vehicle-hibw.vercel.app/login?error=auth_failed');
         }
     }
     // đăng nhập với FaceBook
@@ -210,7 +210,7 @@ class UserController extends Controller
             // return redirect("http://localhost:5173/")->withHeader('userName',$user->name);
         } catch (\Exception $e) {
             // Xử lý lỗi nếu có
-            return redirect('http://localhost:5173/login?error=auth_failed');
+            return redirect('https://booking-vehicle-hibw.vercel.app/login?error=auth_failed');
         }
     }
 
