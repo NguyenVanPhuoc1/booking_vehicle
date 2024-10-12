@@ -107,11 +107,8 @@ return [
         // ],
         'mongodb' => [
             'driver' => 'mongodb',
-            'dsn' => env('MONGODB_URL'), // Sử dụng DSN để kết nối
+            'uri' => env('MONGODB_URL', 'mongodb://localhost:27017'),
             'database' => env('DB_DATABASE', 'wecommit'),
-            'options' => [
-                'ssl' => true, // Nếu bạn sử dụng MongoDB Atlas hoặc cần kết nối an toàn
-            ],
         ],
 
     ],
