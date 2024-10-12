@@ -14,6 +14,10 @@ use App\Http\Controllers\UserController;
 |
 */
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
 // routes/web.php
 Route::get('login/google', [UserController::class, 'redirectToGoogle']);
 Route::get('login/google/callback', [UserController::class, 'handleGoogleCallback']);
