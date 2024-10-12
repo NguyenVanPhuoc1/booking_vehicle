@@ -56,5 +56,5 @@ class ApiClient {
 }
 
 // Khởi tạo ApiClient
-const apiClient = new ApiClient('http://127.0.0.1:8000/api');
+const apiClient = new ApiClient(import.meta.env.VITE_APP_API_URL_LOCAL);
 export default apiClient;

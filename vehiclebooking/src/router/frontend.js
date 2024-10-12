@@ -7,7 +7,7 @@ const frontend = [
             {
                 path: "",
                 name: "frontend-index",
-                component: () => import("../views/front/IndexPage.vue"),
+                component: () => import("../views/front/IndexPage.vue"),//dùng lazy loading in vue -> Chỉ tải khi cần
             },
             {
                 path: "quick-booking",

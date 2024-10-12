@@ -36,7 +36,7 @@ class ProductController extends Controller
         try {
             // Lấy thông tin chi tiết của xe và bao gồm cả specification và getImageCars
             // $car = Cars::where('slug', '=', $slug)->get(); 
-            $car = $this->carService->productbyGet($slug);
+            $car = $this->carService->productDetail($slug)->get();
             $car_detail = $car->load(['specification','getImageCars']);
             if (count($car_detail) < 1) {
                 
@@ -69,7 +69,7 @@ class ProductController extends Controller
         // $query = Cars::where('slug', $slug)->first();
 
         // return $query;
-        return $this->carService->productbyFirst($slug);
+        return $this->carService->productDetail($slug)->first();
     }
     //add product
     public function _addProduct(ProductRequest $request){
