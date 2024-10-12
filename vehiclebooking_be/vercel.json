@@ -27,7 +27,7 @@
         "VIEW_COMPILED_PATH": "/tmp",
         "CACHE_DRIVER": "array",
         "LOG_CHANNEL": "stderr",
-        "SESSION_DRIVER": "cookie"
+        "SESSION_DRIVER": "cookie",
         "VUE_APP_URL":"https://booking-vehicle-hibw.vercel.app/",
         "MONGODB_URL": "mongodb+srv://phuoc031123nina:rlGV3rr0E74TIYQt@wecommit.w2roy.mongodb.net/wecommit?retryWrites=true&w=majority&appName=wecommit",
         "DB_CONNECTION": "mongodb",
