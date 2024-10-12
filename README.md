@@ -102,5 +102,5 @@ This project uses [Laravel](https://laravel.com/) for the backend (version:10x),
 
 ## Contact
 
-For any questions, please reach out to [email@example.com](mailto:nguyenvanphuoc031123@gmail.com).
+For any questions, please reach out to [nguyenvanphuoc031123@gmail.com](mailto:nguyenvanphuoc031123@gmail.com).
 
