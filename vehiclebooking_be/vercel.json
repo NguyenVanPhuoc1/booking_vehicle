@@ -1,5 +1,16 @@
 {
     "version": 2,
+    "builds": [
+        {
+            "src": "api/index.php",
+            "use": "vercel-php@0.7.1",
+            "config": {
+                "php": {
+                    "php.ini": "./php.ini"
+                }
+            }
+        }
+    ],
     "functions": {
         "api/index.php": {
             "runtime": "vercel-php@0.7.1"
