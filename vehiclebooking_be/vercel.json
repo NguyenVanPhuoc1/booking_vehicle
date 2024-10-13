@@ -4,9 +4,6 @@
         "api/index.php": {
             "runtime": "vercel-php@0.7.1"
         },
-       "php": {
-            "php.ini": "php.ini"
-        },
     },
     "routes": [
         {
