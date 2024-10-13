@@ -107,7 +107,7 @@ return [
         // ],
         'mongodb' => [
             'driver' => 'mongodb',
-            'uri' => env('MONGODB_URL'),
+            'dsn' => env('MONGODB_URL'),
             'database' => env('DB_DATABASE'),
         ],
 
