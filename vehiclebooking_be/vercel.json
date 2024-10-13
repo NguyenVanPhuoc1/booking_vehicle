@@ -11,10 +11,6 @@
             "dest": "/public/img/"
         },
         {
-            "src": "/api/(.*)",
-            "dest": "/api/index.php"
-        },
-        {
             "src": "/(.*)",
             "dest": "/api/index.php"
         }
