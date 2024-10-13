@@ -6,7 +6,7 @@
             "use": "vercel-php@0.7.1",
             "config": {
                 "php": {
-                    "php.ini": "./php.ini"
+                    "php.ini": "php.ini"
                 }
             }
         }
