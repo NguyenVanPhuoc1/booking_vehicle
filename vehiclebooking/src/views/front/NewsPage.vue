@@ -21,7 +21,7 @@
                         <div class="post-content my-3">
                             <div class="post-image">
                                 <div class="rounded-3 overflow-hidden">
-                                    <img class="w-100" :src="'../../../src/assets/front/images/' +  news.news_image " :alt="'Blog' + index ">
+                                    <img class="w-100" :src="news.news_image" :alt="'Blog' + index ">
                                 </div>
                                 <div class="post-date btn btn-success">
                                     <div class="m">{{  news.created_at.split(" ")[1] }}</div>
