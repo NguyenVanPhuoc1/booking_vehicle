@@ -5,7 +5,7 @@ class ApiClient {
         this._baseUrl = baseUrl; // Đặt baseURL vào thuộc tính riêng
         this.client = axios.create({
             baseURL: this._baseUrl,
-            timeout: 1000,
+            timeout: 60000,
         });
     }
 
