@@ -26,7 +26,7 @@
                                 </router-link>
                             </li>
                             <li class="nav-item py-0">
-                                <router-link class="nav-link text-white-50 px-3" @click.prevent="logout('index')" target="_blank">
+                                <router-link class="nav-link text-white-50 px-3" :to="'/'" target="_blank">
                                     <font-awesome-icon :icon="['fas', 'reply']" />
                                     Trang Chủ
                                 </router-link>
