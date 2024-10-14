@@ -4,7 +4,7 @@
         <div class="header">
             <div class="container-fluid">
                 <div
-                    class="row text-white header-start"
+                    class="d-none d-sm-block row text-white header-start"
                     style="background-color: black"
                 >
                     <div class="col-sm-8 d-none d-sm-flex">
