@@ -57,5 +57,5 @@ class ApiClient {
 
 // Khởi tạo ApiClient
 // const apiClient = new ApiClient(import.meta.env.VITE_APP_API_URL_LOCAL);
-const apiClient = new ApiClient('https://booking-vehicle-serve.vercel.app/);
+const apiClient = new ApiClient('https://nongsannvp.store/api');
 export default apiClient;
