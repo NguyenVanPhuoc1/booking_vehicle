@@ -125,7 +125,7 @@
                     <div class="car-list">
                         <div class="rows">
                             <div class="row">
-                                <Carousel  :autoplay="5000" :wrap-around="true" v-bind="setting" :breakpoints="breakpoints">
+                                <Carousel  :autoplay="5000" :wrap-around="wrapAround" :breakpoints="breakpoints">
                                 <!-- car item -->
                                 <Slide v-for="(car,index) in car_outstanding" :key="index" class="col-12 col-lg-4 col-md-6 my-4 mx-2">
                                     <div class="car-item rounded p-2 border w-100">
@@ -473,7 +473,7 @@ const setting =  ref({
         snapAlign: 'center',
     });
 const breakpoints = {
-    576: {
+    320: {
         itemsToShow: 1,
         snapAlign: 'center',
     },
@@ -486,6 +486,7 @@ const breakpoints = {
         snapAlign: 'center',
     },
 };
+const wrapAround = computed(() => car_outstanding.value.length > setting.value.itemsToShow);
 // count number
 const counters = ref([
     { target: 800, current: 0, title: "Completed Orders" },
