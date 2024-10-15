@@ -25,56 +25,64 @@
                         <!-- my table brand -->
                         <div class="my-table-brand rounded my-5 bg-white border">
                             <h4 class="fw-bold p-2">Brand Product</h4>
-                            <div class="m-4">
-                                <table class="table table-hover table-bordered table-resizable rounded table-responsive" >
-                                    <thead>
-                                        <tr>
-                                            <th class="align-middle" style="width: 5%;">
-                                                <div class="custom-control custom-checkbox my-checkbox text-center">
-                                                    <input type="checkbox" class="custom-control-input" id="selectall-checkboxbrand" v-model="selectAll" @change="toggleSelectAll">
-                                                    <label for="selectall-checkboxbrand" class="custom-control-label"></label>
-                                                </div>
-                                            </th>
-                                            <th scope="col" class="align-middle text-center" style="width: 10%;">STT</th>
-                                            <th scope="col" class="align-middle text-center" style="width: 40%;" >Tên Hãng</th>
-                                            <th scope="col" class="align-middle text-center">Nổi Bật</th>
-                                            <th scope="col" class="align-middle text-center">Thao Tác</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="text-center" v-for="(item,index) in brand_cars" :key="item._id">
-                                            <th scope="row"> 
-                                                <div class="form-check d-flex justify-content-center">
-                                                    <input class="form-check-input" type="checkbox" :value="item._id" v-model="selectedItems" :id="'check-index' + item._id ">
-                                                    <label :for="'check-index-' + item._id" class="form-check-label"></label>
-                                                </div>
-                                            </th>
-                                            <td>{{ index + 1 }}</td>
-                                            <td>{{ item.brand_name }}</td>
-                                            <td>
-                                                <div class="form-check d-flex justify-content-center">
-                                                    <input class="form-check-input" type="checkbox" :checked="item.noi_bat" v-model="item.noi_bat"
-                                                    @change="handleCheckboxChange($event, item._id)" :id="'check-brand-noibat-' + item._id">
-                                                    <label :for="'check-brand-noibat-' + item._id" class="form-check-label"></label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="operation d-flex justify-content-center" >
-                                                    <div class="mx-2">
-                                                        <router-link :to="{ name: 'admin-brand-product-edit', params: { id: item._id } }" class="btn btn-primary"><font-awesome-icon :icon="['far', 'pen-to-square']" /> </router-link>
+                            <div class="m-4 card card-primary card-outline text-sm mb-0" v-if="brand_cars.length  > 1 ">
+                                <div class="card-body table-responsive p-0">
+                                    <table class="table table-hover table-bordered table-resizable rounded " >
+                                        <thead>
+                                            <tr>
+                                                <th class="align-middle" style="width: 5%;">
+                                                    <div class="custom-control custom-checkbox my-checkbox text-center">
+                                                        <input type="checkbox" class="custom-control-input" id="selectall-checkboxbrand" v-model="selectAll" @change="toggleSelectAll">
+                                                        <label for="selectall-checkboxbrand" class="custom-control-label"></label>
                                                     </div>
-                                                    <div class="mx-2">
-                                                        <button @click="deleteItem(item._id)" class="btn btn-danger">
-                                                            <font-awesome-icon :icon="['fas', 'trash']" />
-                                                        </button>
+                                                </th>
+                                                <th scope="col" class="align-middle text-center" style="width: 10%;">STT</th>
+                                                <th scope="col" class="align-middle text-center" style="min-width: 200px;" >Tên Hãng</th>
+                                                <th scope="col" class="align-middle text-center">Nổi Bật</th>
+                                                <th scope="col" class="align-middle text-center">Thao Tác</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="text-center" v-for="(item,index) in brand_cars" :key="item._id">
+                                                <th scope="row"> 
+                                                    <div class="form-check d-flex justify-content-center">
+                                                        <input class="form-check-input" type="checkbox" :value="item._id" v-model="selectedItems" :id="'check-index' + item._id ">
+                                                        <label :for="'check-index-' + item._id" class="form-check-label"></label>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                                </th>
+                                                <td>{{ index + 1 }}</td>
+                                                <td>{{ item.brand_name }}</td>
+                                                <td>
+                                                    <div class="form-check d-flex justify-content-center">
+                                                        <input class="form-check-input" type="checkbox" :checked="item.noi_bat" v-model="item.noi_bat"
+                                                        @change="handleCheckboxChange($event, item._id)" :id="'check-brand-noibat-' + item._id">
+                                                        <label :for="'check-brand-noibat-' + item._id" class="form-check-label"></label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="operation d-flex justify-content-center" >
+                                                        <div class="mx-2">
+                                                            <router-link :to="{ name: 'admin-brand-product-edit', params: { id: item._id } }" class="btn btn-primary"><font-awesome-icon :icon="['far', 'pen-to-square']" /> </router-link>
+                                                        </div>
+                                                        <div class="mx-2">
+                                                            <button @click="deleteItem(item._id)" class="btn btn-danger">
+                                                                <font-awesome-icon :icon="['fas', 'trash']" />
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                        </div>
+                            <div v-else>
+                                <div class="alert alert-danger">
+                                    <!-- Nội dung khi điều kiện customers.length là false -->
+                                    <p>Không có hãng nào được tìm thấy.</p>
+                                </div>
+                            </div>
+                        </div>                      
                     </div>
                 </div>
             </template>
