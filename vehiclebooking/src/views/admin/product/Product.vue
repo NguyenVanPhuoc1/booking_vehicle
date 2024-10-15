@@ -31,18 +31,18 @@
                         <table class="table table-hover table-bordered table-resizable rounded " >
                             <thead>
                                 <tr>
-                                    <th class="align-middle" style="width: 5%;">
+                                    <th class="align-middle" >
                                         <div class="custom-control custom-checkbox my-checkbox text-center">
                                             <input type="checkbox" class="custom-control-input" id="selectall-checkboxbrand" v-model="selectAll" @change="toggleSelectAll">
                                             <label for="selectall-checkboxbrand" class="custom-control-label"></label>
                                         </div>
                                     </th>
-                                    <th scope="col" class="align-middle text-center" style="width: 10%;">STT</th>
-                                    <th scope="col" class="align-middle text-center" style="width: 20%;">Ảnh Sản Phẩm</th>
-                                    <th scope="col" class="align-middle text-center" style="width: 25%;" >Tên Hãng</th>
-                                    <th scope="col" class="align-middle text-center" style="width: 10%;" >Giá</th>
-                                    <th scope="col" class="align-middle text-center">Nổi Bật</th>
-                                    <th scope="col" class="align-middle text-center">Thao Tác</th>
+                                    <th scope="col" class="align-middle text-center" >STT</th>
+                                    <th scope="col" class="align-middle text-center" style="min-width: 20%;">Ảnh Sản Phẩm</th>
+                                    <th scope="col" class="align-middle text-center" style="min-width: 250px;" >Tên Hãng</th>
+                                    <th scope="col" class="align-middle text-center" style="min-width: 100px;" >Giá</th>
+                                    <th scope="col" class="align-middle text-center" style="min-width: 5%;">Nổi Bật</th>
+                                    <th scope="col" class="align-middle text-center" style="min-width: 40px;">Thao Tác</th>
                                 </tr>
                             </thead>
                             <tbody>
