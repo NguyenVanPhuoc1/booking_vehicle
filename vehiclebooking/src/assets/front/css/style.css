@@ -1,7 +1,11 @@
-/* home page */
+/* css reset */
 body{
-    overflow-x: hidden;
+    overflow: hidden;
+    overflow-y: auto;
 }
+
+/* home page */
+
 /* Carousel */
 #carouselExampleIndicators {
     position: relative;
