@@ -1,5 +1,5 @@
 <template >
-    <div>
+    <div class="header-sticky">
         <!-- Header mobile + desktop -->
         <div class="header">
             <div class="container-fluid">
