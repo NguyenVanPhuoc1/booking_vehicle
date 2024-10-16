@@ -207,7 +207,7 @@
                                     :title="carDetail.name"
                                     description="Khám phá Xe Thể Thao XYZ, một chiếc xe mang lại hiệu suất cao và thiết kế sang trọng. Chạy thử ngay hôm nay!"
                                     quote="Chiếc xe này là sự kết hợp hoàn hảo giữa công nghệ và phong cách."
-                                    :media="https://nongsannvp.store/vehiclebooking_be/storage/app/public/images/toyota-supra.jpg"
+                                    media="https://nongsannvp.store/vehiclebooking_be/storage/app/public/images/toyota-supra.jpg"
                                     hashtags="booking-vehicle app"
                                 >
                                     Share on Facebook
