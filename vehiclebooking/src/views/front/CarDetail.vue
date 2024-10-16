@@ -204,9 +204,10 @@
                                 <ShareNetwork class="text-decoration-none"
                                     network="facebook"
                                     :url="shareUrl "
-                                    title="Say hi to Vite! A brand new, extremely fast development setup for Vue."
-                                    description="This week, I’d like to introduce you to 'Vite', which means 'Fast'. It’s a brand new development setup created by Evan You."
-                                    quote="The hot reload is so fast it\'s near instant. - Evan You"
+                                    :title="carDetail.name"
+                                    description="Khám phá Xe Thể Thao XYZ, một chiếc xe mang lại hiệu suất cao và thiết kế sang trọng. Chạy thử ngay hôm nay!"
+                                    quote="Chiếc xe này là sự kết hợp hoàn hảo giữa công nghệ và phong cách."
+                                    :media="getImgUrl(item - 1)"
                                     hashtags="booking-vehicle app"
                                 >
                                     Share on Facebook
