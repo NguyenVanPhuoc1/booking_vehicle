@@ -52,8 +52,10 @@ import { faHeart,faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 
 // import apiClient from '@/services/ApiClient.js';
 // import { faPhone, faBar } from '@fortawesome/free-solid-svg-icons'
+import VueSocialSharing from 'vue-social-sharing'
 
 const app = createApp(App);
+app.use(VueSocialSharing);
 app.use(router);
 app.use(Button);
 app.use(Drawer);app.use(Breadcrumb);app.use(BreadcrumbItem);
