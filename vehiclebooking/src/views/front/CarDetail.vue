@@ -211,7 +211,7 @@
                                 >
                                     Share on Facebook
                                 </ShareNetwork>
-                            </div>
+                            </button>
                         </div>
                     </div>
                 </div>
