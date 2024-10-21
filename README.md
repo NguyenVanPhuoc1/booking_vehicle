@@ -3,8 +3,14 @@
 ## Introduction
 
 This project uses [Laravel](https://laravel.com/) for the backend (version:10x), [Vue.js](https://vuejs.org/) for the frontend and [MongoDb](https://www.mongodb.com/) for save database. It is a web application designed to user can sign in(user, google, facebook) and can book vehicle.
+<strong style="opacity: 0.5;">Admin demo</strong>
+
+![admin_dashboard](https://github.com/user-attachments/assets/fd2b6933-dd64-4449-9d49-be9f9c17d0e3)
+## Demo
+**[booking-vehicle-hibw.vercel.app]([https://laravel.com/](https://booking-vehicle-hibw.vercel.app/))**
 
 ## Libraries and Tools
+
 
 ### Backend Libraries
 
