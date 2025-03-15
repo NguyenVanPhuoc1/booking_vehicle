@@ -186,7 +186,7 @@ const updateProfile = async () => {
         // Kiểm tra phản hồi từ server
         if (response.status === 200) {
             toast.success("Cập Nhật Thành Công!");
-            sessionStorage.setItem('user_info', JSON.stringify(response.data.user));
+            localStorage.setItem('user_info', JSON.stringify(response.data.user));
         } else {
             errors.value = response.data.error;
         }
