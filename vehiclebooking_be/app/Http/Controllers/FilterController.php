@@ -52,7 +52,7 @@ class FilterController extends Controller
     //     return $query;
     // }
     protected $carService;
-
+    //inject class CarService vào 
     public function __construct(CarService $carService)
     {
         $this->carService = $carService;

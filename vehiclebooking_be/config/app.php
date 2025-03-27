@@ -185,8 +185,8 @@ return [
         /*
          * Package Service Providers...
          */
-        MongoDB\Laravel\MongoDBServiceProvider::class,
-        MongoDB\Driver\Manager::class,
+        // MongoDB\Laravel\MongoDBServiceProvider::class,
+        // MongoDB\Driver\Manager::class,
         /*
          * Application Service Providers...
          */

@@ -14,7 +14,7 @@ use App\Service\CarService;
 class ProductController extends Controller
 {
     protected $carService;
-
+    //inject class vào (dependency injecttion)
     public function __construct(CarService $carService)
     {
         $this->carService = $carService;
@@ -96,6 +96,7 @@ class ProductController extends Controller
                 'seat' => intval($request->input('spec_seat')),
                 'door' => intval($request->input('spec_door')),
                 'interiorColor' => $request->input('spec_interiorColor'),
+                
                 'car_slug' => $car_info->slug,
             ]);
             CarImages::insert([

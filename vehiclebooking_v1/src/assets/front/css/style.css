@@ -1,0 +1,323 @@
+/* css reset */
+body{
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+/* home page */
+
+/* Carousel */
+#carouselExampleIndicators {
+    position: relative;
+    /* margin-top: -99px; */
+    z-index: 0;
+}
+.carousel-item {
+    position: relative;
+}
+.carousel-item {
+    height: 95vh; 
+    /* height: auto; */
+}
+.carousel-item img {
+    /* giảm độ chói */
+    height: 100%;
+    filter: brightness(0.7);
+}
+.carousel-content {
+    position: absolute;
+    z-index: 0;
+    top: 50%;
+    left: 53%;
+    transform: translate(-50%, -50%);
+    padding: 2.5rem;
+    text-align: center;
+    color: aliceblue;
+}
+.carousel-content .carousel-content-title {
+    font-size: 72px;
+    font-weight: 500;
+}
+.carousel-content .carousel-content-text {
+    font-size: 25px;
+    text-align: justify;
+    overflow: hidden;
+    white-space: normal;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    /* -webkit-line-clamp: 3; */
+}
+.carousel-content .btn {
+    font-weight: 500;
+    font-size: 0.8rem;
+}
+/* Carousel */
+
+/* Our Vehicle Fleet */
+.our-vehicle-fleet {
+    background: #121212;
+}
+.our-vehicle-header .title {
+    font-size: 42px;
+}
+/* ranger-number */
+.ranger-number {
+    position: relative;
+    overflow: hidden; 
+    height: 100%;
+}
+.ranger-number_img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    object-fit: cover;
+    transform: translate(0)!important;
+}
+.ranger-number-container {
+    padding: 0 0 250px 0;
+    position: relative; 
+    z-index: 1;
+}
+.ranger-number-container .range-number-title h2 {
+    font-size: 36px;
+    text-align: center;
+}
+.range-number_ins .de_count {
+    background-color: rgba(255, 255, 255, 0.25);
+    width: 100%;
+}
+.range-number_ins .de_count h2 {
+    font-size: 36px;
+    text-align: center;
+    font-weight: 700;
+    color: green;
+}
+/* our feature */
+.our-feature, .lasted-news{
+    background: #121212;
+}
+.box-icon{
+    position: relative;
+}
+.box-icon-item{
+    position: absolute;
+}
+.our-feature-left{
+    padding-left: 75px;
+    margin-bottom: 1rem;
+}
+.box-right{
+    right: 0;
+}
+.our-feature-right{
+    padding-right: 75px;
+    margin-bottom: 1rem;
+}
+/* lastest -news */
+.post-image{
+    position: relative;
+}
+.post-date{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+.post-image .post-date .m{
+    font-size: 32px;
+    font-weight: bold;
+    padding-bottom: 0;
+}
+.post-image .post-date .d{
+    font-size: 10px;
+    letter-spacing: 5px;
+    padding-left: 5px;
+}
+.post-text{
+    position: relative;
+    margin: 0 35px 35px 35px;
+    margin-top: -40px;
+    background: #121212;
+}
+/* advices */
+.advices{
+    position: relative;
+    overflow: hidden; 
+    /* background: #121212;   */
+}
+.advices .rellax {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 250%;
+    z-index: 1;
+}
+
+.advices .rellax img {
+    object-fit: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+.content{
+    position: relative;
+    z-index: 10;
+    color: white;
+    padding: 60px;
+    /* top: 50%; */
+    /* transform: translateY(-50%); */
+}
+/* question */
+.questions{
+    background: #121212;
+}
+@media (max-width: 576px) {
+    #carouselExampleIndicators {
+        /* position: relative;
+        top: 0; */
+        margin-top: 0!important;;
+        width: 100vw;
+        /* height: 70vh; */
+    }
+    .carousel-indicators{
+        margin: 0!important;
+    }
+    .carousel-item {
+        /* max-height: 100%; */
+        height: auto;
+    }
+
+    .carousel-item img {
+        width: 100%;
+        height: 80%;
+        object-fit: cover;
+        object-position: center;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    
+    .carousel-content {
+        top: 50%;
+        padding: 0;
+    }
+    .carousel-content-title{
+        font-size: 20px!important;
+    }
+    .carousel-content .carousel-content-text {
+        font-size: 16px;
+    }
+    /* advices */
+    .advices .rellax {
+        height: 200%;
+    }
+}
+
+/* booking page */
+
+.vel-booking,.account-dasboard{
+    /* position: absolute; */
+    padding: 120px 0;
+    background: url("../images/imgbooking.jpg") ;
+    background-position: center;
+    width: 100%;
+}
+.form-booking{
+    background: #121212;
+}
+.form-booking-car{
+    margin-top: -40px;
+}
+
+.container-timeline ul {
+    counter-reset: item;
+}
+.container-timeline ul li{
+    list-style-type: none;
+    position: relative;
+    padding: 50px 4em 0 0;
+}
+.container-timeline ul li::before{
+    content: counter(item);
+    counter-increment: item;
+    width: 45px;
+    height: 45px;
+    font-weight: bold;
+    text-align: center;
+    color: aliceblue;
+    background: green;
+    border-radius: 10px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: -21px;
+    left: 0;
+}
+@media (max-width: 990px) {
+    
+    .container-timeline ul li:last-child{
+        border-top: 1px solid green;
+    }
+}
+
+/* login page */
+.login-page,.register-page{
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+.login-form,.register-form{
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* z-index: 1; */
+}
+.title-line{
+    position: relative;
+}
+.title-line::before{
+    position: absolute;
+    content: '';
+    height: 1px;
+    border: 1px solid #b3b3b3;
+    width: 30%;
+    left: 0;
+    top: 50%;
+}
+.title-line::after{
+    position: absolute;
+    content: '';
+    height: 1px;
+    border: 1px solid #b3b3b3;
+    width: 30%;
+    right: 0;
+    top: 50%;
+}
+
+/* account */
+.dashboard-main{
+    background: #F5F8FA;
+}
+table thead tr th{
+    font-size: 14px;
+    color: #acacac!important;
+}
+.item-list{
+    display: table;
+    padding: 20px;
+    background: #ffffff;
+    box-shadow: 3px 3px 9px rgba(164, 164, 186, 0.2);
+}
+.two-column-list {
+    column-count: 2; /* Chia danh sách thành 2 cột */
+    column-gap: 20px; /* Khoảng cách giữa các cột */
+    list-style-type: none; /* Xóa gạch đầu dòng */
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
