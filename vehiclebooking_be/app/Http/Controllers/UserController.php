@@ -108,6 +108,12 @@ class UserController extends Controller
             'user' => $user,
         ],200);
     }
+
+    public function refreshToken(){
+        $newToken = JWTAuth::refresh(JWTAuth::getToken());
+        $user = $this->me();
+        return $this->respondWithToken($newToken, $user);
+    }
     // lấy thông tin người dùng
     public function me()
     {
@@ -223,7 +229,18 @@ class UserController extends Controller
                     'birthday' => $request->birthday ?? $user->birthday, 
                     'gender' => $request->gender ?? $user->gender,
                 ]);
-            }
+                // if(isset($user->birthday)  || isset($user->gender) ){
+                //     User::create([
+                //         'birthday' => $request->birthday, 
+                //         'gender' => $request->gender,
+                //     ]);
+                // }else{
+                //     $user->update([
+                //         'birthday' => $request->birthday ?? $user->birthday, 
+                //         'gender' => $request->gender ?? $user->gender,
+                //     ]);
+                // }
+            } 
             return response()->json(['message' => 'Cập nhật thành công' ,'user' => $user], 200);
         }catch ( \Exception $e){
             return response()->json(['error' => 'Không cập nhật được'], 404);
