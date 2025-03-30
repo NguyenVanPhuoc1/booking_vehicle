@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  # Backend - Laravel
+  backend:
+    build:
+      context: .  
+      dockerfile: ./vehiclebooking_be/docker/Dockerfile
+    container_name: miduner_backend
+    working_dir: /var/www/html
+    ports:
+      - "8000:80"
+    volumes:
+      - ./vehiclebooking_be:/var/www/html
+    networks:
+      - app-network
+
+  # Frontend - Vue 3 + Vite
+  frontend:
+    build:
+      context: ./vehiclebooking_v1
+      dockerfile: ./docker/Dockerfile
+    container_name: miduner_frontend
+    ports:
+      - "80:80"
+    networks:
+      - app-network
+
+networks:
+  app-network:
