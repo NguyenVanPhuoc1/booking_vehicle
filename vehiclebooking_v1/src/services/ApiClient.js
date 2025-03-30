@@ -66,6 +66,6 @@ class ApiClient {
 }
 
 // Khởi tạo ApiClient
-const apiClient = new ApiClient(import.meta.env.VITE_APP_API_URL);
-// const apiClient = new ApiClient('https://nongsannvp.store/api');
+// const apiClient = new ApiClient(import.meta.env.VITE_APP_API_URL);
+const apiClient = new ApiClient('https://nongsannvp.store/api');
 export default apiClient;
