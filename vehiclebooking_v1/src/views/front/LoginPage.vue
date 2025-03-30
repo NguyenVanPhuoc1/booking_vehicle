@@ -161,6 +161,7 @@
             });
 
             if (response.status === 200) {
+                console.log(response.data.access_token)
                 sessionStorage.setItem('access_token', response.data.access_token);
                 const userInfo = response.data.user.original;
                 await handleLoginSuccess(userInfo);
@@ -248,11 +249,11 @@
         setTimeout(() => {
             if (userInfo.role === 0) {
                 router.replace('/').then(() => {
-                    window.location.reload();
+                    // window.location.reload();
                 }); // Sử dụng replace để không cho phép quay lại trang đăng nhập
             } else  {
                 router.replace('/admin/dashboard').then(() => {
-                    window.location.reload();
+                    // window.location.reload();
                 }); 
             }
         }, 2000);
