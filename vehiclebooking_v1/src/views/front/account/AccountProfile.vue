@@ -124,9 +124,9 @@ const user_gender = ref(user.gender ? user.gender : '0');
 
 const errors = ref({});
 const toast = useToast();
-const getToken = async () => {
-    await axios.get("/sanctum/csrf-cookie");
-};
+// const getToken = async () => {
+//     await axios.get("/sanctum/csrf-cookie");
+// };
 
 // validate input
 const user_birthdayError = ref('');
@@ -174,7 +174,7 @@ const updateProfile = async () => {
         errors.value = {};
 
         // Lấy CSRF token
-        await getToken();
+        // await getToken();
 
         // Gửi yêu cầu POST đến server
         const response = await apiClient.postData("/update-user-profile", {
