@@ -7,16 +7,18 @@ class ApiClient {
             baseURL: this._baseUrl,
             timeout: 60000,
         });
-        // 🛠️ Thêm Interceptor để tự động gắn token vào mỗi request
-        // this.client.interceptors.request.use(config => {
-        //     const token = localStorage.getItem('access_token'); // Lấy token từ localStorage
-        //     if (token) {
-        //         config.headers['Authorization'] = `Bearer ${token}`; // Gắn token vào header
-        //     }
-        //     return config;
-        // }, error => {
-        //     return Promise.reject(error);
-        // });
+         // Thêm Interceptor để tự động gắn token vào mỗi request
+        this.client.interceptors.request.use(config => {
+            const token = sessionStorage.getItem('access_token');
+            console.log("Interceptor chạy, token hiện tại:", token);
+
+            if (token) {
+                config.headers['Authorization'] = `Bearer ${token}`; 
+            }
+            return config;
+        }, error => {
+            return Promise.reject(error);
+        });
     }
 
     // Getter cho baseURL
@@ -66,6 +68,6 @@ class ApiClient {
 }
 
 // Khởi tạo ApiClient
-// const apiClient = new ApiClient(import.meta.env.VITE_APP_API_URL);
-const apiClient = new ApiClient('https://nongsannvp.store/api');
+const apiClient = new ApiClient(import.meta.env.VITE_APP_URL_LOCAL);
+// const apiClient = new ApiClient('https://nongsannvp.store/api');
 export default apiClient;
