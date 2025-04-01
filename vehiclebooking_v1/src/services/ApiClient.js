@@ -10,7 +10,7 @@ class ApiClient {
          // Thêm Interceptor để tự động gắn token vào mỗi request
         this.client.interceptors.request.use(config => {
             const token = sessionStorage.getItem('access_token');
-            console.log("Interceptor chạy, token hiện tại:", token);
+            // console.log("Interceptor chạy, token hiện tại:", token);
 
             if (token) {
                 config.headers['Authorization'] = `Bearer ${token}`; 
