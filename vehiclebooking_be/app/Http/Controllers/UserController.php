@@ -61,33 +61,16 @@ class UserController extends Controller
     {
         try {
             // Kiểm tra thông tin đăng nhập dùng auth(session based)
-            // if (Auth::attempt($request->only('email', 'password'))) {
-            //     $user = Auth::user();
-
-            //     // Kiểm tra xem tùy chọn "Nhớ Tôi" có được chọn không
-            //     if ($request->filled('remember_me') && $request->remember_me == true) {
-            //         Auth::login($user, true); // Bật tính năng "remember_me"
-            //     } else {
-            //         Auth::login($user, false);
-            //     }
-
-            //     return response()->json([
-            //         'user' => $user,
-            //         'message' => 'Đăng nhập thành công.',
-            //     ]);
-            // }
-
-            // // Nếu không đăng nhập được
-            // return response()->json(['error' => 'Email hoặc mật khẩu đăng nhập không đúng!'], 403);
              // Kiểm tra thông tin đăng nhập dùng jwt(json web token)
             $credentials = $request->only('email', 'password');
             $remember = $request->has('remember_me') && $request->remember_me == true;
             $ttl = $remember ? (60 * 24 * 7) : 60;
-            if (!$token = JWTAuth::attempt($credentials)) {
+            JWTAuth::factory()->setTTL($ttl);
+            if (!$token = JWTAuth::attempt($credentials) ) {
                 return response()->json(['error' => 'Thông tin đăng nhập không chính xác'], 401);
             }
             $user = $this->me();
-            $token = JWTFactory::setTTL($ttl)->fromUser($user);
+            // $token = JWTFactory::setTTL($ttl)->fromUser($user);
 
             return $this->respondWithToken($token,$user);
         
@@ -103,7 +86,7 @@ class UserController extends Controller
     {
         // $user = $this->me();
         return response()->json([
-            'access_token' => $token,
+            'access_token' => (string) $token,
             'token_type' => 'bearer',
             'user' => $user,
         ],200);
@@ -141,15 +124,18 @@ class UserController extends Controller
 
             // Đăng nhập người dùng
             Auth::login($user, true);
+             // Tạo token JWT
+            $token = JWTAuth::fromUser($user);
 
             // Chuyển hướng về Vue.js với token trong query string
             return '
             <html>
                 <head>
                     <script>
-                        function callOpenerFunction(username) {
+                        function callOpenerFunction(username, token) {
                             if (window.opener && true) {
-                                window.opener.postMessage({ action: \'callLoginCallback\', username: username }, \'*\');
+                                window.opener.postMessage({ action: \'callLoginCallback\', username: username, token : token}, \'*\');
+                                window.close();
                             } else {
                                 console.log(`Cửa sổ chính không có hàm _doLoginFromCallback hoặc không thể gọi được.`);
                             }
@@ -158,7 +144,8 @@ class UserController extends Controller
                         // Gọi hàm khi cửa sổ popup được tải
                         window.onload = function() {
                             var username = `' . json_encode($user) . '`;
-                            callOpenerFunction(username);
+                            var token = "' . $token . '";
+                            callOpenerFunction(username, token);
                         };
                     </script>
                 </head>
@@ -190,15 +177,18 @@ class UserController extends Controller
 
             // Đăng nhập người dùng
             Auth::login($user, true);
+             // Tạo token JWT
+            $token = JWTAuth::fromUser($user);
 
             // Chuyển hướng về Vue.js với token trong query string
             return '
             <html>
                 <head>
                     <script>
-                        function callOpenerFunction(username) {
+                        function callOpenerFunction(username, token) {
                             if (window.opener && true) {
-                                window.opener.postMessage({ action: \'callLoginCallback\', username: username }, \'*\');
+                                window.opener.postMessage({ action: \'callLoginCallback\', username: username, token : token}, \'*\');
+                                window.close();
                             } else {
                                 console.log(`Cửa sổ chính không có hàm _doLoginFromCallback hoặc không thể gọi được.`);
                             }
@@ -207,7 +197,8 @@ class UserController extends Controller
                         // Gọi hàm khi cửa sổ popup được tải
                         window.onload = function() {
                             var username = `' . json_encode($user) . '`;
-                            callOpenerFunction(username);
+                            var token = "' . $token . '";
+                            callOpenerFunction(username, token);
                         };
                     </script>
                 </head>

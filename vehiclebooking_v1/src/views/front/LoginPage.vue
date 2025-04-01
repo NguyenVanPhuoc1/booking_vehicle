@@ -162,9 +162,9 @@
 
             if (response.status === 200) {
                 console.log(response.data.access_token)
-                sessionStorage.setItem('access_token', response.data.access_token);
+                const token = response.data.access_token;
                 const userInfo = response.data.user.original;
-                await handleLoginSuccess(userInfo);
+                await handleLoginSuccess(userInfo, token);
             }
             
         } catch (error) {
@@ -179,29 +179,28 @@
 
     // login with Google
     const loginWithGoogle = async () => {
-        window._doLoginFromCallback = function(username){
+        window._doLoginFromCallback = function(username, token){
             // const name = JSON.parse(username).name;
             // console.log("OK" + name);
-            handleLoginSuccess(JSON.parse(username));
+            handleLoginSuccess(JSON.parse(username), token);
         }
         // ham lang nghe su kien message duoc gui tu popup
         window.addEventListener('message', function(event) {
             if (event.data && event.data.action === 'callLoginCallback') {
-                _doLoginFromCallback(event.data.username);
+                _doLoginFromCallback(event.data.username, event.data.token);
             }
         });
-            // Bt, app js nguoi ta ko chuyen huong truc tiep. Ma thay vao do mo 1 popup. Chuyen huong o trong do.
-            // gio cu chay thu xem no lam sao da
-        // Open popup login
-        const url = `${apiClient.baseUrl.replace('/api', '')}/login/google`;
+
+        // Mở popup đăng nhập Google
+        const url = `${apiClient.baseUrl.replace("/api", "")}/login/google`;
         const popupWidth = 600;
         const popupHeight = 600;
-        const left = (window.innerWidth / 2) - (popupWidth / 2);
-        const top = (window.innerHeight / 2) - (popupHeight / 2);
+        const left = window.innerWidth / 2 - popupWidth / 2;
+        const top = window.innerHeight / 2 - popupHeight / 2;
 
         window.open(
             url,
-            'popupWindow',
+            "popupWindow",
             `width=${popupWidth},height=${popupHeight},top=${top},left=${left},scrollbars=yes`
         );
     };
@@ -236,10 +235,10 @@
     };
 
     // Hàm xử lý khi đăng nhập thành công
-    const handleLoginSuccess = async (userInfo) => {
+    const handleLoginSuccess = async (userInfo, token) => {
 
-        // Lưu thông tin người dùng vào sessionStorage
-        // sessionStorage.setItem('user_info', JSON.stringify(userInfo));
+        // Lưu thông tin token vào sessionStorage
+        sessionStorage.setItem('access_token', token);
         if (userInfo) {
             store.dispatch('updateUser', userInfo);
         }
@@ -249,11 +248,11 @@
         setTimeout(() => {
             if (userInfo.role === 0) {
                 router.replace('/').then(() => {
-                    // window.location.reload();
+                    window.location.reload();
                 }); // Sử dụng replace để không cho phép quay lại trang đăng nhập
             } else  {
                 router.replace('/admin/dashboard').then(() => {
-                    // window.location.reload();
+                    window.location.reload();
                 }); 
             }
         }, 2000);
