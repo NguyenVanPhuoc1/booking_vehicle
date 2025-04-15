@@ -15,11 +15,13 @@ class CheckLogin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->is('admin/*')) {
+        $user = auth()->user();
+
+        if ($user && $user->role == 1) {
+            // Nếu user đăng nhập và có role = 1 => Cho qua middleware
             return $next($request);
         }
-
         // Nếu không phải admin, trả về response 403 hoặc redirect
-        return response()->json(['error' => 'Unauthorized'], 403);
+        return response()->json(['error' => 'Unauthorized'], 401);
     }
 }

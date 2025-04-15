@@ -427,10 +427,10 @@
                     </div>
                     <div class="clear-fix"></div>
                     <div class="row" data-aos="fade-up">
-                        <div v-for="(item, index) in items" :key="index" class="col-12 col-lg-6 question-inner mb-3">
+                        <div v-for="(item, index) in cus_ques" :key="index" class="col-12 col-lg-6 question-inner mb-3">
                             <div class="card-body">
                                 <div class="wh-question d-flex justify-content-between align-items-center border-bottom border-secondary">
-                                    <p class="text-white my-3">{{ item.question }}</p>
+                                    <p class="text-white my-3">{{ item.cus_ques }}</p>
                                     <font-awesome-icon
                                         class="btn btn-success"
                                         :icon="item.expanded ? ['fas', 'angle-up'] : ['fas', 'angle-down']"
@@ -438,7 +438,7 @@
                                     />
                                 </div>
                                 <div class="wh-answer text-secondary my-4" v-show="item.expanded">
-                                    {{ item.answer }}
+                                    {{ item.ans_ques != null ? item.ans_ques : "Chưa có câu trả lời." }}
                                 </div>
                             </div>
                         </div>
@@ -527,27 +527,16 @@ onMounted(async () => {
     });
 
     try {
-        await Promise.all([fetchCarsOutStanding(), fetchNewsOutStanding()]);
+        await Promise.all([fetchCarsOutStanding(), fetchNewsOutStanding(), fetchCusQuestion()]);
     } catch (err) {
         console.error('Error fetching data:', err);
     }
 });
 // questions
-const items = ref([
-    {
-        question: 'How do I get started with Car Rental?',
-        answer: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.',
-        expanded: false
-    },
-    {
-        question: 'What is a rental car security deposit?',
-        answer: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.',
-        expanded: false
-    },
-]);
+const cus_ques = ref([]);
 
 const toggleAnswer = (index) => {
-    items.value[index].expanded = !items.value[index].expanded;
+    cus_ques.value[index].expanded = !cus_ques.value[index].expanded;
 };
 
 // get data car outstanding
@@ -593,6 +582,14 @@ const fetchNewsOutStanding = async () => {
             console.log('Error fetching cars:', err);
         }   
     };
+const fetchCusQuestion = async() => {
+    try {
+            const response = await apiClient.fetchData('/get-all-questions', { page: 1, perpage: 6 });
+            cus_ques.value = response.data;
+        } catch (err) {
+            console.log('Error fetching questions:', err);
+        }  
+}
 // view detail thong qua slug product
 // const router = useRouter();
 // const viewDetails = async (slug: string) => {

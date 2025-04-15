@@ -298,6 +298,14 @@ body{
     right: 0;
     top: 50%;
 }
+.text-split{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+}
 
 /* account */
 .dashboard-main{

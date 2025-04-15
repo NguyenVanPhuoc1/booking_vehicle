@@ -137,7 +137,7 @@
         errors.value = {};
 
         // Lấy CSRF token
-        await getToken();
+        // await getToken();
         // vidu voi jwt
         // header + payload + SIGNATURE
         // const header = {

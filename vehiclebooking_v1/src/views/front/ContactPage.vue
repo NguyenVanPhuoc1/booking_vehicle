@@ -88,17 +88,13 @@
     const errors = ref({});
     const router = useRouter();
     const toast = useToast();
-    const getToken = async () => {
-        await axios.get("/sanctum/csrf-cookie");
-    };
 // đăng nhập thường
 const getQuestion = async () => {
     try {
-        // Reset errors before sending request
         errors.value = {};
 
         // Lấy CSRF token
-        await getToken();
+        // await getToken();
 
         // Gửi yêu cầu POST đến server
         const response = await apiClient.postData("/get-question", {
@@ -107,12 +103,14 @@ const getQuestion = async () => {
             phone: cus_phone.value, 
             cus_ques: cus_ques.value,
         });
+        // console.log(response);
         if (response.status === 200) {
             toast.success("Send Success!");
             // console.log(response.data);
         } else {
             errors.value = response.data.error;
         }
+        // Reset errors before sending request
     } catch (error) {
         errors.value = error.response.data.errors;
     }

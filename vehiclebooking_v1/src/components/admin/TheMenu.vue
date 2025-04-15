@@ -2,7 +2,7 @@
     <a-list class="menu bg-light" :style="{ width: state.collapsed ? '80px' : 'auto' }">
         <div class="border-bottom py-3">
             <div class="d-none d-sm-flex justify-content-around">
-                <div class="fw-bold menu-name">Bảng Điều Khiển</div>
+                <div class="fw-bold menu-name" >Bảng Điều Khiển</div>
                 <a-button type="primary" @click="toggleCollapsed">
                     <MenuUnfoldOutlined v-if="state.collapsed" />
                     <MenuFoldOutlined v-else />
@@ -11,34 +11,35 @@
         </div>
         <a-menu class="bg-light border-0"
             :open-keys="state.openKeys"
-            :selected-keys="state.selectedKeys" 
-            @update:open-keys="handleOpenKeysChange"
-            @click="handleSelectedKeysChange" 
             mode="inline"
+            v-model:selectedKeys="state.selectedKeys"
+            @openChange="onOpenChange"
         >
             <!-- Duyệt qua danh sách items để render các menu item -->
             <div v-for="item in menuItems" :key="item.key">
+                <!-- Nếu không có children, render a-menu-item -->
                 <a-menu-item v-if="!item.children" :key="item.key">
                     <router-link :to="{ name: item.key }" class="text-decoration-none">
                         <component :is="item.icon" />
                         <span>{{ item.label }}</span>
                     </router-link>
                 </a-menu-item>
-                <a-sub-menu v-else>
-                    <!-- //recursive component: dùng để gọi đệ quy 1 temple trong menu -->
+
+                <!-- Nếu có children, render a-sub-menu -->
+                <a-sub-menu v-else :key="item.keys">
                     <template #title>
                         <component :is="item.icon" />
                         <span>{{ item.label }}</span>
                     </template>
-                    <template #default>
-                        <div v-for="child in item.children" :key="child.key">
-                            <a-menu-item :key="child.key">
-                                <router-link :to="{ name: child.key }" class="text-decoration-none">
-                                    <span>{{ child.label }}</span>
-                                </router-link>
-                            </a-menu-item>
-                        </div>
-                    </template>
+                    
+                    <a-menu-item
+                        v-for="child in item.children"
+                        :key="child.key"
+                        >
+                            <router-link :to="{ name: child.key }" class="text-decoration-none">
+                                {{ child.label }}
+                            </router-link>
+                    </a-menu-item>
                 </a-sub-menu>
             </div>
         </a-menu>
@@ -55,11 +56,6 @@ import {
     InboxOutlined,
 } from "@ant-design/icons-vue";
 
-const state = reactive({
-    collapsed: false,
-    selectedKeys: ["admin-dashboard"],
-    openKeys: ["admin-dashboard", "admin-users", "admin-roles", "admin-setting", "admin-brand-product"],
-});
 
 // Khai báo danh sách menu với icon tương ứng
 const menuItems = reactive([
@@ -79,7 +75,7 @@ const menuItems = reactive([
         label: "Vai Trò",
     },
     {
-        key: "",
+        key: "admin-production",
         icon: InboxOutlined,
         label: "Quản Lí Sản Phẩm",
         children: [
@@ -93,16 +89,37 @@ const menuItems = reactive([
             },
         ],
     },
+    {
+        key: "admin-customer",
+        icon: InboxOutlined,
+        label: "Quản Lí Khách Hàng",
+        children: [
+            {
+                key: "admin-customer-question",
+                label: "Hỏi Đáp",
+            },
+            {
+                key: "admin-customer-booking",
+                label: "Booking Car",
+            },
+        ],
+    },
 ]);
 
-// Xử lý sự kiện thay đổi openKeys
-const handleOpenKeysChange = (keys) => {
-    state.openKeys = keys;
-};
 
-// Xử lý sự kiện thay đổi selectedKeys
-const handleSelectedKeysChange = (item) => {
-    state.selectedKeys = [item.key];  // Chỉ lưu phần tử được click
+const state = reactive({
+    collapsed: false,
+    rootSubmenuKeys: ["admin-production", "admin-customer"],
+    openKeys: [],
+    selectedKeys: [],
+});
+const onOpenChange = (openKeys) => {
+    const latestOpenKey = openKeys.find(key => state.openKeys.indexOf(key) === -1);
+    if (state.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+        state.openKeys = openKeys;
+    } else {
+        state.openKeys = latestOpenKey ? [latestOpenKey] : [];
+    }
 };
 
 const toggleCollapsed = () => {

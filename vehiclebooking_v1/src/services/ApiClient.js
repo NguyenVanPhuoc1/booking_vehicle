@@ -7,6 +7,7 @@ class ApiClient {
             baseURL: this._baseUrl,
             timeout: 60000,
         });
+ 
          // Thêm Interceptor để tự động gắn token vào mỗi request
         this.client.interceptors.request.use(config => {
             const token = sessionStorage.getItem('access_token');
@@ -19,6 +20,49 @@ class ApiClient {
         }, error => {
             return Promise.reject(error);
         });
+
+         // Thêm Interceptor để xử lý refresh token khi bị lỗi 401
+        // this.client.interceptors.response.use(
+        //     response => response,  // Nếu không có lỗi, trả về response bình thường
+        //     async error => {
+        //         const originalRequest = error.config;
+
+        //         // Nếu token hết hạn (mã lỗi 401) và chưa làm mới token
+        //         if (error.response && error.response.status === 401 && !originalRequest._retry) {
+        //             originalRequest._retry = true;
+
+        //             try {
+        //                 // Lấy lại refresh token từ sessionStorage
+        //                 const refreshToken = sessionStorage.getItem('refresh_token');
+        //                 if (refreshToken) {
+        //                     // Gửi yêu cầu lấy lại access token mới bằng refresh token
+        //                     const response = await this.client.post('/auth/refresh-token', { refresh_token: refreshToken });
+                            
+        //                     // Lưu lại token mới vào sessionStorage
+        //                     const newAccessToken = response.data.access_token;
+        //                     sessionStorage.setItem('access_token', newAccessToken);
+
+        //                     // Cập nhật lại token vào header của request ban đầu và thử lại yêu cầu
+        //                     originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+        //                     return this.client(originalRequest);  // Thực hiện lại request ban đầu với token mới
+        //                 } else {
+        //                     // Nếu không có refresh token, redirect đến trang login
+        //                     window.location.href = '/login';
+        //                 }
+        //             } catch (refreshError) {
+        //                 console.error('Error refreshing token', refreshError);
+        //                 // Nếu không thể refresh, logout người dùng
+        //                 sessionStorage.removeItem('access_token');
+        //                 sessionStorage.removeItem('refresh_token');
+        //                 window.location.href = '/login';
+        //             }
+        //         }
+
+        //         // Nếu lỗi không phải do hết hạn token, trả về lỗi gốc
+        //         return Promise.reject(error);
+        //     }
+        // );
+
     }
 
     // Getter cho baseURL
@@ -33,9 +77,9 @@ class ApiClient {
     }
 
     // Hàm GET
-    async fetchData(endpoint, params = {}) {
+    async fetchData(endpoint, params = {}, headers = {}) {
         try {
-            const response = await this.client.get(endpoint, { params });
+            const response = await this.client.get(endpoint, { params, headers });
             return response.data;
         } catch (error) {
             this.handleError(error, endpoint);
@@ -68,6 +112,7 @@ class ApiClient {
 }
 
 // Khởi tạo ApiClient
+
 // const apiClient = new ApiClient(import.meta.env.VITE_APP_URL_LOCAL);
 const apiClient = new ApiClient('https://nongsannvp.store/api');
 export default apiClient;

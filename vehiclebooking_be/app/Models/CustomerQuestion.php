@@ -13,6 +13,6 @@ class CustomerQuestion extends Model
     protected $collection = 'cus_questions';
 
     // fillable được khai báo mới dùng được ::create và::updateOrCreate
-    protected $fillable = ['cus_id','cus_question','noi_bat'];
+    protected $fillable = ['cus_id','cus_ques', 'ans_ques','noi_bat'];
 
 }

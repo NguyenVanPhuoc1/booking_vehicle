@@ -55,6 +55,16 @@ const admin = [
                 path: "setting",
                 name: "admin-setting",
                 component: () => import("../views/admin/setting/AdminSetting.vue"),
+            },
+            {
+                path: "customer-question",
+                name: "admin-customer-question",
+                component: () => import("../views/admin/question/Adminquestion.vue"),
+            },
+            {
+                path: "customer-booking",
+                name: "admin-customer-booking",
+                component: () => import("../views/admin/setting/AdminSetting.vue"),
             }
         ],
     }

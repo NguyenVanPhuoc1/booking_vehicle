@@ -29,7 +29,7 @@ class CustomerController extends Controller
                 // // Thêm câu hỏi cho khách hàng
                 CustomerQuestion::updateOrCreate(
                     ['cus_id' => $customer->_id], // Điều kiện tìm kiếm bản ghi
-                    ['cus_question' => $request->cus_ques, 'noi_bat' => true] 
+                    ['cus_ques' => $request->cus_ques, 'noi_bat' => true] 
                 );
             // Trả về phản hồi thành công
             return response()->json(['message' => 'add question successfully'], 200);

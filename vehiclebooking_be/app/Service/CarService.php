@@ -59,7 +59,7 @@ class CarService
         ->with(['specification', 'getImageCars'])
         ->where('noi_bat', '=', true)
         ->orderBy('createdAt', 'desc')
-        ->select('name', 'price_per_day')
+        ->select('name', 'price_per_day','slug')
         ->limit(10)->get();
         return $product_list;
     }
