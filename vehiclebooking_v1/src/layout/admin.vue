@@ -5,7 +5,7 @@
         <!-- main -->
         <div class="container-fluid ">
             <div class="row">
-                <div class="col-lg-2 d-none d-lg-flex  menucol border border-1 bg-light"  :style="{ height: 'auto', width: 'auto'}">
+                <div class="col-lg-2 d-none d-lg-flex  menucol border-1 bg-light"  :style="{ height: 'auto', width: 'auto'}">
                     <TheMenu />
                 </div>
     

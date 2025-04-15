@@ -19,7 +19,7 @@
                     <div class="col-12 col-lg-9">
                         <!-- scheduled order -->
                         <div class="scheduled-order rounded p-4 bg-white">
-                            <h5 class="fw-bold">My Recent Orders</h5>
+                            <h5 class="fw-bold">Chuyến Đã Đặt</h5>
                             <div class="my-scheduled-order">
                                 <table class="table table-hover  table-resizable" >
                                     <thead>
@@ -63,7 +63,7 @@
                         </div>
                         <!-- completed order -->
                         <div class="completed-order rounded p-4 bg-white">
-                            <h5 class="fw-bold">My Completed Orders</h5>
+                            <h5 class="fw-bold">Chuyến Đang Sử Dụng</h5>
                             <div class="my-completed-order">
                                 <table class="table table-hover  table-resizable" >
                                     <thead>
@@ -107,7 +107,7 @@
                         </div>
                         <!-- cancelled order -->
                         <div class="cancelled-order rounded p-4 bg-white">
-                            <h5 class="fw-bold">My Cancelled Orders</h5>
+                            <h5 class="fw-bold">Lịch Sử Đặt chuyến</h5>
                             <div class="my-cancelled-order">
                                 <table class="table table-hover  table-resizable" >
                                     <thead>

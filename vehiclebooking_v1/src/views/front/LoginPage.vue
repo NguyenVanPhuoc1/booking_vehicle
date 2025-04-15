@@ -137,7 +137,7 @@
         errors.value = {};
 
         // Lấy CSRF token
-        await getToken();
+        // await getToken();
         // vidu voi jwt
         // header + payload + SIGNATURE
         // const header = {
@@ -207,15 +207,15 @@
 
     // login with Facebook
     const loginWithFacebook = async () => {
-        window._doLoginFromCallback = function(username){
+        window._doLoginFromCallback = function(username, token){
             // const name = JSON.parse(username).name;
             // console.log("OK" + name);
-            handleLoginSuccess(JSON.parse(username));
+            handleLoginSuccess(JSON.parse(username), token);
         }
         // ham lang nghe su kien message duoc gui tu popup
         window.addEventListener('message', function(event) {
             if (event.data && event.data.action === 'callLoginCallback') {
-                _doLoginFromCallback(event.data.username);
+                _doLoginFromCallback(event.data.username, event.data.token);
             }
         });
             // Bt, app js nguoi ta ko chuyen huong truc tiep. Ma thay vao do mo 1 popup. Chuyen huong o trong do.

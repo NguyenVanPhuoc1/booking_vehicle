@@ -67,18 +67,18 @@ const fetchData_userviewpage = async (duration) => {
     try {
         error.value = null;
         loading.value = true;
-        const response = await axios.get(`${apiClient.baseUrl}/get-data-userviewpage`,{
-            params: {
-                gia_tri: duration
-            }
+        // console.log(sessionStorage.getItem('access_token'));
+        const response = await apiClient.fetchData('/get-data-userviewpage', {
+            gia_tri: duration
         });
+
         loading.value = false;
-        
-        // Chuyển đổi giá trị thành số và trả về dữ liệu
-        const data = response.data.map(item => ({
+
+        const data = response.map(item => ({
             ...item,
             screenPageViews: Number(item.screenPageViews)
         }));
+
         // console.log(data);
         customers.value = data;  // Cập nhật giá trị cho customers
 
@@ -114,9 +114,16 @@ const chartData = ref({
         }
     ]
 });
+const chartOptions = ref({
+    responsive: true,
+    animation: {
+        duration: 1000,
+        easing: 'easeOutElastic'
+    }
+});
 
 onMounted(async () => {
-    const data = await fetchData_userviewpage(selectedOption.value);
+    await fetchData_userviewpage(selectedOption.value);
 });
 const selectedOption = ref('7day');
 
@@ -128,14 +135,16 @@ watch(selectedOption, (newValue, oldValue) => {
 
 <style scoped>
     #my-chart-id {
-        height: 300px!important; /* Set the height for the chart */
-        width: 100%!important;
+        width: 100% !important;
+        max-height: 400px;
         position: relative;
+        overflow: visible !important;
     }
+
     @media (max-width: 762px) {
         #my-chart-id {
-            height: auto; /* Set the height for the chart */
-            position: relative;
+            max-height: none;
+            height: auto;
         }
     }
   /* Optional: Add some custom styles */
